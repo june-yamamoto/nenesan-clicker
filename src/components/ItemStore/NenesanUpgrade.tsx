@@ -7,8 +7,6 @@ import { UpgradeItem } from './UpgradeItem';
 
 const useStyles = createUseStyles({
     root: {
-        maxHeight: 200,
-        overflowY: 'auto',
     },
     upgradeItem: {
         backgroundColor: '#EEEEEE',

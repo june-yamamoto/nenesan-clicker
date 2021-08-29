@@ -1,4 +1,5 @@
 import { Button, Tooltip, withStyles } from '@material-ui/core';
+import { AssessmentOutlined } from '@material-ui/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StatisticsRootState } from '../../store/state';
@@ -42,8 +43,10 @@ export const StatsArea = () => {
     }, [clickedNenesanTimes, maxNenesan, totalNenesan]);
 
     return (
-        <StatsTooltip open={open} title={stats} placement={'left-start'}>
-            <Button onClick={handleClick}>統計</Button>
+        <StatsTooltip open={open} title={stats} placement={'left-end'}>
+            <Button onClick={handleClick}>
+                <AssessmentOutlined />
+            </Button>
         </StatsTooltip>
     );
 };

@@ -12,10 +12,10 @@ type BuildItemProps = {
 
 const useStyles = createUseStyles({
     root: {
-        width: 298,
+        width: 300,
         opacity: 0.5,
         pointerEvents: 'none',
-        position: 'absolute',
+        position: 'relative',
         '&:hover': {
             backgroundColor: '#EEEEEE',
             transition: 'background-color 0.2s ease',

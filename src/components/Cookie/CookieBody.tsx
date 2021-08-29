@@ -6,6 +6,7 @@ import { CookieBodyCanvas } from './CookieBodyCanvas';
 import useMount from '../../hooks/useMount';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClickerRootState } from '../../store/state';
+import { useEffect } from 'react';
 
 const useStyles = createUseStyles({
     root: {
@@ -84,6 +85,12 @@ export const CookieBody = () => {
         canvasHeightRef.current = rootDivRef.current.clientHeight;
         canvasWidthRef.current = rootDivRef.current.clientWidth;
     });
+
+    useEffect(() => {
+        if (!rootDivRef.current) return;
+        canvasHeightRef.current = rootDivRef.current.clientHeight;
+        canvasWidthRef.current = rootDivRef.current.clientWidth;
+    }, [rootDivRef.current?.clientHeight, rootDivRef.current?.clientWidth]);
 
     const dispatch = useDispatch();
 

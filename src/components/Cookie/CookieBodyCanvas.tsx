@@ -25,8 +25,8 @@ const useStyles = createUseStyles({
 
 type VisualizePointArrayType = {
     point: { x: number; y: number };
-    puniPoint: { x: number, y: number};
-    onomatope: string,
+    puniPoint: { x: number; y: number };
+    onomatope: string;
     addedValue: number;
     datetime: DateTime;
 };
@@ -82,7 +82,6 @@ export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
     );
 
     const rewriteCanvas = (visualizePointArray: VisualizePointArrayType[]) => {
-        // console.log('visualizePointArray', visualizePointArray);
         const canvasElement = canvasRef.current;
         if (!canvasElement) return;
 
@@ -93,20 +92,30 @@ export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
         ctx.font = '500 30px "Kosugi Maru"';
         visualizePointArray.forEach((visualizePoint) => {
             const pointedDatetime = visualizePoint.datetime;
-            const elapsedTime = -1 * pointedDatetime.diffNow('milliseconds').milliseconds;
-            const drawOpacity =
-                1 - (elapsedTime / 1000);
+            const elapsedTime =
+                -1 * pointedDatetime.diffNow('milliseconds').milliseconds;
+            const drawOpacity = 1 - elapsedTime / 1000;
             ctx.fillStyle = `rgb(15, 15, 15, ${drawOpacity})`;
-            drawPuni(ctx, visualizePoint.puniPoint.x, visualizePoint.puniPoint.y, visualizePoint.onomatope)
+            drawPuni(
+                ctx,
+                visualizePoint.puniPoint.x,
+                visualizePoint.puniPoint.y,
+                visualizePoint.onomatope,
+            );
             const y = visualizePoint.point.y - elapsedTime / 15 - 80;
             const x = visualizePoint.point.x - 15;
             ctx.fillText(`+${visualizePoint.addedValue}`, x, y);
         });
     };
 
-    const drawPuni = (ctx: CanvasRenderingContext2D, x: number, y: number, onomatope: string) => {
+    const drawPuni = (
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        onomatope: string,
+    ) => {
         ctx.fillText(onomatope, x, y);
-    }
+    };
 
     const classes = useStyles();
 

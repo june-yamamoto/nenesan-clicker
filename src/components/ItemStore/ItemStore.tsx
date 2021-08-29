@@ -3,25 +3,30 @@ import { NenesanBuild } from './NenesanBuild';
 import { NenesanUpgrade } from './NenesanUpgrade';
 import { StatsArea } from './StatsArea';
 
+type ItemStoreProps = {
+    windowWidth: number;
+};
+
 const useStyles = createUseStyles({
     root: {
-        height: '100%',
+        maxHeight: '100%',
         boxSizing: 'border-box',
+        minWidth: '300px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
     },
     title: {
-        displaye: 'flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 8,
         fontSize: '24px',
         borderBottom: 'solid 1px #888888',
     },
-    version: {
-
-    },
 });
 
-export const ItemStore = () => {
+export const ItemStore = (props: ItemStoreProps) => {
+    const { windowWidth } = props;
     const classes = useStyles();
 
     return (
