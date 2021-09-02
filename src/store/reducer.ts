@@ -4,6 +4,7 @@ import { BuildItem } from '../models/BuildItem';
 import { UpgradeItemBuilder } from '../models/UpgradeItem';
 import { calcNenesanPerClick } from '../utils/calcNenesanPerClick';
 import { calcNenesanPerSeconds } from '../utils/calcNenesanPerSeconds';
+import { convertBase64ToJson } from '../utils/convertSaveData';
 import { initialState } from './state';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -56,6 +57,7 @@ export const reducer = (state = initialState, action: AnyAction) => {
         return state;
     }
     if (action.type === 'SAVE') {
+        console.log('SAVE');
         const buildItems = state.buildItems.map((item) => {
             return {
                 id: item.id,
@@ -101,6 +103,44 @@ export const reducer = (state = initialState, action: AnyAction) => {
             }),
             upgradeItems: state.upgradeItems.map((item) => {
                 const specifiedItem = loadedState.upgradeItems.find(
+                    (loadedItem: { id: string; purchased: number }) =>
+                        item.id === loadedItem.id,
+                );
+                const specifiedItemPurchased =
+                    (specifiedItem?.purchased as boolean) || false;
+                return UpgradeItemBuilder({
+                    ...item,
+                    purchased: specifiedItemPurchased,
+                });
+            }),
+        };
+    }
+    if (action.type === 'IMPORT') {
+        const importedState = convertBase64ToJson(action.saveDataBase64) as any;
+        if (!importedState) return state;
+        state = {
+            ...state,
+            addCountPerClick: importedState.addCountPerClick,
+            allNenesanUntilNow: importedState.allNenesanUntilNow,
+            clickedNenesanTimes: importedState.clickedNenesanTimes,
+            currentNenesan: importedState.currentNenesan,
+            maxNenesan: importedState.maxNenesan,
+            totalNenesan: importedState.totalNenesan || 0,
+            nenesanPerSeconds: importedState.nenesanPerSeconds,
+            buildItems: state.buildItems.map((item) => {
+                const specifiedItem = importedState.buildItems.find(
+                    (loadedItem: { id: string; itemHas: number }) =>
+                        item.id === loadedItem.id,
+                );
+                const specifiedItemHas =
+                    (specifiedItem?.itemHas as number) || 0;
+                return new BuildItem({
+                    ...item,
+                    itemHas: specifiedItemHas,
+                });
+            }),
+            upgradeItems: state.upgradeItems.map((item) => {
+                const specifiedItem = importedState.upgradeItems.find(
                     (loadedItem: { id: string; purchased: number }) =>
                         item.id === loadedItem.id,
                 );

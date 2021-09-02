@@ -1,8 +1,10 @@
+import { convertBase64ToJson, convertJsonToBase64 } from "../utils/convertSaveData";
+
 export function saveInLocalStorage(stateObject: any) {
     if (!window.localStorage) return;
 
     const storage = window.localStorage;
-    storage.setItem('nenesan_save', JSON.stringify(stateObject));
+    storage.setItem('nenesan_save', convertJsonToBase64(stateObject));
 }
 
 export function loadInLocalStorage() {
@@ -12,5 +14,10 @@ export function loadInLocalStorage() {
     const saveObject = storage.getItem('nenesan_save');
     if (!saveObject) return;
 
-    return JSON.parse(saveObject);
+    // jsonのままlocalStorageに保存していたバージョンに対する分岐
+    if (!convertBase64ToJson(saveObject)) {
+        return JSON.parse(saveObject);
+    }
+
+    return convertBase64ToJson(saveObject);
 }
