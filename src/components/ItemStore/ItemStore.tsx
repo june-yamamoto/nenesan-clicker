@@ -1,4 +1,6 @@
 import { createUseStyles } from 'react-jss';
+import { ConfigArea } from './ConfigArea';
+import { LibraryArea } from './LibraryArea';
 import { NenesanBuild } from './NenesanBuild';
 import { NenesanUpgrade } from './NenesanUpgrade';
 import { StatsArea } from './StatsArea';
@@ -35,6 +37,8 @@ export const ItemStore = (props: ItemStoreProps) => {
             <NenesanUpgrade />
             <NenesanBuild />
             <StatsArea />
+            <LibraryArea />
+            <ConfigArea />
         </div>
     );
 };

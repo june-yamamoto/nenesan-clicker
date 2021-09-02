@@ -54,6 +54,7 @@ export const NenesanBuild = () => {
                     <div className={classes.buildItem} key={index}>
                         <BuildItem
                             name={item.name}
+                            flavor={item.flavor}
                             price={item.currentPrice}
                             itemHas={item.itemHas}
                             currentNenesanHas={currentCount}
