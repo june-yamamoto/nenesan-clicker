@@ -43,7 +43,7 @@ const useStyles = createUseStyles({
     },
 });
 
-const ItemTooltip = withStyles((theme) => ({
+export const ItemTooltip = withStyles((theme) => ({
     tooltip: {
         maxWidth: 242,
         fontSize: '14px',
@@ -72,13 +72,17 @@ export const UpgradeItem = (props: UpgradeItemProps) => {
 
     return (
         <ItemTooltip open={open} title={flavor} placement={'left-start'}>
-            <Card className={classes.root} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+            <Card
+                className={classes.root}
+                onMouseOver={handleMouseOver}
+                onMouseLeave={handleMouseLeave}
+            >
                 <CardContent
                     className={itemContentClass}
                     onClick={onClickPurchaseItem}
                 >
                     <div className={classes.itemName}>{name}</div>
-                    <div className={classes.itemPrice}>{price}ねねさん</div>
+                    <div className={classes.itemPrice}>{price} ねねさん</div>
                 </CardContent>
             </Card>
         </ItemTooltip>

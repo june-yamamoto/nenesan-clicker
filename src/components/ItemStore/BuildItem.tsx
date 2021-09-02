@@ -1,9 +1,12 @@
 import { Card, CardContent } from '@material-ui/core';
 import classNames from 'classnames';
+import { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { ItemTooltip } from './UpgradeItem';
 
 type BuildItemProps = {
     name: string;
+    flavor: string;
     price: number;
     itemHas: number;
     currentNenesanHas: number;
@@ -13,18 +16,18 @@ type BuildItemProps = {
 const useStyles = createUseStyles({
     root: {
         width: 300,
-        opacity: 0.5,
-        pointerEvents: 'none',
         position: 'relative',
-        '&:hover': {
-            backgroundColor: '#EEEEEE',
-            transition: 'background-color 0.2s ease',
-        },
         marginBottom: 4,
         fontFamily: '"Kosugi Maru", "Barlow Semi Condensed",sans-serif',
     },
     itemContent: {
+        pointerEvents: 'none',
         padding: '0px !important',
+        opacity: 0.5,
+        '&:hover': {
+            backgroundColor: '#EEEEEE',
+            transition: 'background-color 0.2s ease',
+        },
     },
     itemName: {
         marginLeft: 8,
@@ -50,21 +53,47 @@ const useStyles = createUseStyles({
 });
 
 export const BuildItem = (props: BuildItemProps) => {
-    const { name, price, itemHas, currentNenesanHas, onClickBuildItem } = props;
+    const {
+        name,
+        flavor,
+        price,
+        itemHas,
+        currentNenesanHas,
+        onClickBuildItem,
+    } = props;
 
     const classes = useStyles();
 
-    const rootClass = classNames(classes.root, {
+    const itemContentClass = classNames(classes.itemContent, {
         [classes.itemCanBuy]: currentNenesanHas >= price,
     });
 
+    const [open, setOpen] = useState(false);
+
+    const handleMouseOver = useCallback((e: any) => {
+        setOpen(true);
+    }, []);
+
+    const handleMouseLeave = useCallback((e: any) => {
+        setOpen(false);
+    }, []);
+
     return (
-        <Card className={rootClass} onClick={onClickBuildItem}>
-            <CardContent className={classes.itemContent}>
-                <div className={classes.itemName}>{name}</div>
-                <div className={classes.itemPrice}>{price}ねねさん</div>
-                <div className={classes.itemCurrentHas}>{itemHas}</div>
-            </CardContent>
-        </Card>
+        <ItemTooltip open={open} title={flavor} placement={'left-start'}>
+            <Card
+                className={classes.root}
+                onMouseOver={handleMouseOver}
+                onMouseLeave={handleMouseLeave}
+            >
+                <CardContent
+                    className={itemContentClass}
+                    onClick={onClickBuildItem}
+                >
+                    <div className={classes.itemName}>{name}</div>
+                    <div className={classes.itemPrice}>{price} ねねさん</div>
+                    <div className={classes.itemCurrentHas}>{itemHas}</div>
+                </CardContent>
+            </Card>
+        </ItemTooltip>
     );
 };
