@@ -29,7 +29,7 @@ const useStyles = createUseStyles({
     itemName: {
         marginLeft: 8,
         textAlign: 'start',
-        fontSize: '20px',
+        fontSize: '16px',
         paddingBottom: 4,
     },
     itemPrice: {
