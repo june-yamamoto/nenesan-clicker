@@ -54,8 +54,6 @@ export const ConfigArea = () => {
 
     const [isImportBase64Normaly, setIsImportBase64Normaly] = useState(true);
 
-    console.log(isImportBase64Normaly);
-
     const handleOpen = useCallback(() => {
         setOpen((prev: boolean) => !prev);
     }, []);
