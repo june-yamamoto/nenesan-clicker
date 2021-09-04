@@ -7,10 +7,10 @@ export const NUMERAL_LITERALS = ['万', '億', '兆', '京', '垓', '𥝱'];
  * 例：1234567 → 123.45万
  * 例：123456789 → 1.234億
  */
-export const convertDisplayUnits = (value: number): string => {
+export const convertDisplayUnits = (value: number, fix?: number): string => {
     const numberOfDigits = value.toString().split('.')[0].length;
     if (numberOfDigits < 5) {
-        return value.toString();
+        return fix ? value.toFixed(fix).toString() : value.toString();
     }
 
     for (let i = 0; i < NUMERAL_LITERALS.length; i += 1) {
@@ -19,5 +19,5 @@ export const convertDisplayUnits = (value: number): string => {
         }
     }
 
-    return value.toString();
+    return fix ? value.toFixed(fix).toString() : value.toString();
 };

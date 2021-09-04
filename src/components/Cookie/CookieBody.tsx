@@ -137,9 +137,9 @@ export const CookieBody = () => {
                 canvasHeight={canvasHeightRef.current}
                 />
             <div className={classes.label}>
-                <span>{`${convertDisplayUnits(currentCount)} ねねさん`}</span>
-                <span>{`+${convertDisplayUnits(nenesanPerSeconds)} ねねさん/s`}</span>
-                <span>{`+${convertDisplayUnits(nenesanPerClick)} ねねさん/クリック`}</span>
+                <span>{`${convertDisplayUnits(currentCount, 0)} ねねさん`}</span>
+                <span>{`+${convertDisplayUnits(nenesanPerSeconds, 1)} ねねさん/s`}</span>
+                <span>{`+${convertDisplayUnits(nenesanPerClick, 0)} ねねさん/クリック`}</span>
                 {/* <span>{`${currentCount.toFixed(0)} ねねさん`}</span>
                 <span>{`+${nenesanPerSeconds.toFixed(1)} ねねさん/s`}</span>
                 <span>{`+${nenesanPerClick.toFixed(
