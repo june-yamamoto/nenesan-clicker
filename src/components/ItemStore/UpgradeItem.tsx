@@ -1,7 +1,8 @@
+import React, { useCallback, useState } from 'react';
 import { Card, CardContent, Tooltip, withStyles } from '@material-ui/core';
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { convertDisplayUnits } from '../../utils/convertDisplayUnits';
 
 type UpgradeItemProps = {
     name: string;
@@ -43,14 +44,14 @@ const useStyles = createUseStyles({
     },
 });
 
-export const ItemTooltip = withStyles((theme) => ({
+export const ItemTooltip = React.memo(withStyles((theme) => ({
     tooltip: {
         maxWidth: 242,
         fontSize: '14px',
     },
-}))(Tooltip);
+}))(Tooltip));
 
-export const UpgradeItem = (props: UpgradeItemProps) => {
+export const UpgradeItem = React.memo((props: UpgradeItemProps) => {
     const { name, flavor, price, currentNenesanHas, onClickPurchaseItem } =
         props;
 
@@ -82,9 +83,9 @@ export const UpgradeItem = (props: UpgradeItemProps) => {
                     onClick={onClickPurchaseItem}
                 >
                     <div className={classes.itemName}>{name}</div>
-                    <div className={classes.itemPrice}>{price} ねねさん</div>
+                    <div className={classes.itemPrice}>{convertDisplayUnits(price)} ねねさん</div>
                 </CardContent>
             </Card>
         </ItemTooltip>
     );
-};
+});

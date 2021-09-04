@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClickUpgradeItem } from '../../models/UpgradeItem';
@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
     },
 });
 
-export const NenesanUpgrade = () => {
+export const NenesanUpgrade = React.memo(() => {
     const dispatch = useDispatch();
 
     const currentCount = useSelector(
@@ -91,4 +91,6 @@ export const NenesanUpgrade = () => {
             })}
         </div>
     );
-};
+});
+NenesanUpgrade.displayName = 'NenesanUpgrade';
+

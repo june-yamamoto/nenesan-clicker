@@ -57,7 +57,6 @@ export const reducer = (state = initialState, action: AnyAction) => {
         return state;
     }
     if (action.type === 'SAVE') {
-        console.log('SAVE');
         const buildItems = state.buildItems.map((item) => {
             return {
                 id: item.id,

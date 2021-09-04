@@ -1,7 +1,8 @@
+import React, { useCallback, useState } from 'react';
 import { Card, CardContent } from '@material-ui/core';
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { convertDisplayUnits } from '../../utils/convertDisplayUnits';
 import { ItemTooltip } from './UpgradeItem';
 
 type BuildItemProps = {
@@ -9,7 +10,7 @@ type BuildItemProps = {
     flavor: string;
     price: number;
     itemHas: number;
-    currentNenesanHas: number;
+    itemCanBuy: boolean;
     onClickBuildItem: () => void;
 };
 
@@ -52,20 +53,20 @@ const useStyles = createUseStyles({
     },
 });
 
-export const BuildItem = (props: BuildItemProps) => {
+export const BuildItem = React.memo((props: BuildItemProps) => {
     const {
         name,
         flavor,
         price,
         itemHas,
-        currentNenesanHas,
+        itemCanBuy,
         onClickBuildItem,
     } = props;
 
     const classes = useStyles();
 
     const itemContentClass = classNames(classes.itemContent, {
-        [classes.itemCanBuy]: currentNenesanHas >= price,
+        [classes.itemCanBuy]: itemCanBuy,
     });
 
     const [open, setOpen] = useState(false);
@@ -90,10 +91,10 @@ export const BuildItem = (props: BuildItemProps) => {
                     onClick={onClickBuildItem}
                 >
                     <div className={classes.itemName}>{name}</div>
-                    <div className={classes.itemPrice}>{price} ねねさん</div>
+                    <div className={classes.itemPrice}>{convertDisplayUnits(price)} ねねさん</div>
                     <div className={classes.itemCurrentHas}>{itemHas}</div>
                 </CardContent>
             </Card>
         </ItemTooltip>
     );
-};
+});

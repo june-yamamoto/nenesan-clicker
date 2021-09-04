@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +27,7 @@ const useStyles = createUseStyles({
     },
 });
 
-export const NenesanBuild = () => {
+export const NenesanBuild = React.memo(() => {
     const dispatch = useDispatch();
 
     const currentCount = useSelector(
@@ -57,7 +58,7 @@ export const NenesanBuild = () => {
                             flavor={item.flavor}
                             price={item.currentPrice}
                             itemHas={item.itemHas}
-                            currentNenesanHas={currentCount}
+                            itemCanBuy={currentCount >= item.currentPrice}
                             onClickBuildItem={() => handleClickBuildItem(index)}
                         />
                     </div>
@@ -65,4 +66,5 @@ export const NenesanBuild = () => {
             })}
         </div>
     );
-};
+});
+NenesanBuild.displayName = 'nenesan-Build';
