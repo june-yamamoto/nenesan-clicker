@@ -81,13 +81,11 @@ export const reducer = (state = initialState, action: AnyAction) => {
         if (!loadedState) return state;
         state = {
             ...state,
-            addCountPerClick: loadedState.addCountPerClick,
             allNenesanUntilNow: loadedState.allNenesanUntilNow,
-            clickedNenesanTimes: loadedState.clickedNenesanTimes,
             currentNenesan: loadedState.currentNenesan,
-            maxNenesan: loadedState.maxNenesan,
+            clickedNenesanTimes: loadedState.clickedNenesanTimes || 0,
+            maxNenesan: loadedState.maxNenesan || 0,
             totalNenesan: loadedState.totalNenesan || 0,
-            nenesanPerSeconds: loadedState.nenesanPerSeconds,
             buildItems: state.buildItems.map((item) => {
                 const specifiedItem = loadedState.buildItems.find(
                     (loadedItem: { id: string; itemHas: number }) =>
@@ -113,6 +111,11 @@ export const reducer = (state = initialState, action: AnyAction) => {
                 });
             }),
         };
+        state.nenesanPerSeconds = calcNenesanPerSeconds(
+            state.buildItems,
+            state.upgradeItems,
+        );
+        state.addCountPerClick = calcNenesanPerClick(state.upgradeItems)
     }
     if (action.type === 'IMPORT') {
         const importedState = convertBase64ToJson(action.saveDataBase64) as any;
@@ -121,11 +124,10 @@ export const reducer = (state = initialState, action: AnyAction) => {
             ...state,
             addCountPerClick: importedState.addCountPerClick,
             allNenesanUntilNow: importedState.allNenesanUntilNow,
-            clickedNenesanTimes: importedState.clickedNenesanTimes,
             currentNenesan: importedState.currentNenesan,
-            maxNenesan: importedState.maxNenesan,
+            clickedNenesanTimes: importedState.clickedNenesanTimes || 0,
+            maxNenesan: importedState.maxNenesan || 0,
             totalNenesan: importedState.totalNenesan || 0,
-            nenesanPerSeconds: importedState.nenesanPerSeconds,
             buildItems: state.buildItems.map((item) => {
                 const specifiedItem = importedState.buildItems.find(
                     (loadedItem: { id: string; itemHas: number }) =>
@@ -151,6 +153,11 @@ export const reducer = (state = initialState, action: AnyAction) => {
                 });
             }),
         };
+        state.nenesanPerSeconds = calcNenesanPerSeconds(
+            state.buildItems,
+            state.upgradeItems,
+        );
+        state.addCountPerClick = calcNenesanPerClick(state.upgradeItems)
     }
     return state;
 };
