@@ -66,7 +66,18 @@ export const LibraryArea = () => {
                                 <ListItem key={item.id}>
                                     <ListItemText
                                         primary={item.name}
-                                        secondary={item.flavor}
+                                        secondary={
+                                            <>
+                                                <div>{item.flavor}</div>
+                                                <div>
+                                                    {item.link && (
+                                                        <a href={item.link} target="_blank" rel="noreferrer">
+                                                            リンク
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </>
+                                        }
                                     />
                                 </ListItem>
                                 <Divider />
