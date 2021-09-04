@@ -7,6 +7,8 @@ import useMount from '../../hooks/useMount';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClickerRootState } from '../../store/state';
 import { useEffect } from 'react';
+import { convertDisplayUnits } from '../../utils/convertDisplayUnits';
+import { CookieBodyBackgroundCanvas } from './CookieBodyBackgroundCanvas';
 
 const useStyles = createUseStyles({
     root: {
@@ -130,12 +132,19 @@ export const CookieBody = () => {
 
     return (
         <div className={classes.root} ref={rootDivRef}>
+            <CookieBodyBackgroundCanvas
+                canvasWidth={canvasWidthRef.current}
+                canvasHeight={canvasHeightRef.current}
+                />
             <div className={classes.label}>
-                <span>{`${currentCount.toFixed(0)} ねねさん`}</span>
+                <span>{`${convertDisplayUnits(currentCount)} ねねさん`}</span>
+                <span>{`+${convertDisplayUnits(nenesanPerSeconds)} ねねさん/s`}</span>
+                <span>{`+${convertDisplayUnits(nenesanPerClick)} ねねさん/クリック`}</span>
+                {/* <span>{`${currentCount.toFixed(0)} ねねさん`}</span>
                 <span>{`+${nenesanPerSeconds.toFixed(1)} ねねさん/s`}</span>
                 <span>{`+${nenesanPerClick.toFixed(
                     0,
-                )} ねねさん/クリック`}</span>
+                )} ねねさん/クリック`}</span> */}
             </div>
             <div className={classes.neneCookieContainer}>
                 <img
