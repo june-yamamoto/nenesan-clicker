@@ -9,6 +9,6 @@ export const useAddNenesanInterval = (nenesanPerSeconds: number, dispatch: Dispa
     }, [nenesanPerSeconds]);
 
     useInterval(() => {
-        dispatch({ type: 'ADD_BY_INTERVAL', addCount: (nenesanPerSecondsRef.current) / 100 })
-    }, 10)
+        dispatch({ type: 'ADD_BY_INTERVAL', addCount: (nenesanPerSecondsRef.current) / 20 })
+    }, 50)
 };
