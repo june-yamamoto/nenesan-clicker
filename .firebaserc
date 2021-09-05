@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "nenesan-clicker"
-  }
+    "prod": "nenesan-clicker",
+    "dev": "nenesan-clicker-dev"
+  },
+  "targets": {}
 }
