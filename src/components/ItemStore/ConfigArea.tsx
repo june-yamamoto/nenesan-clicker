@@ -32,6 +32,7 @@ const useStyles = createUseStyles({
     },
     importExportArea: {
         marginTop: 8,
+        marginBottom: 8,
     },
     margin: {
         marginTop: 8,
@@ -142,8 +143,8 @@ export const ConfigArea = () => {
                             className={classes.textField}
                         />
                     </div>
-                    <Divider />
                 </Container>
+                <Divider />
                 <Snackbar
                     open={importAlertOpen}
                     autoHideDuration={6000}
