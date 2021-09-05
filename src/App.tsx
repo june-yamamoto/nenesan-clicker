@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import Div100vh from 'react-div-100vh';
 import { createUseStyles } from 'react-jss';
-import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { CookieBody } from './components/Cookie/CookieBody';
 import { ItemStore } from './components/ItemStore/ItemStore';
@@ -11,23 +10,13 @@ import useMount from './hooks/useMount';
 import { ClickerRootState } from './store/state';
 import { useEffect } from 'react';
 import { Drawer } from '@material-ui/core';
+import { AppHeader } from './components/Header/AppHeader';
+import firebase, { db } from './firebase';
+import { collection } from 'firebase/firestore';
 
 const useStyles = createUseStyles({
     root: {
         userSelect: 'none',
-    },
-    title: {
-        color: '#ffd93c',
-    },
-    appHeader: {
-        backgroundColor: '#282c34',
-        height: '60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'left',
-        paddingLeft: '16px',
-        fontSize: 'calc(10px + 2vmin)',
-        color: 'white',
     },
     body: {
         display: 'flex',
@@ -41,10 +30,6 @@ const useStyles = createUseStyles({
         minWidth: '300px',
         borderWidth: '3px',
         borderColor: '#888888',
-    },
-    hamburgerMenuIcon: {
-        position: 'absolute',
-        right: 16,
     },
 });
 
@@ -86,15 +71,10 @@ export const App = () => {
 
     return (
         <Div100vh className={classes.root}>
-            <header className={classes.appHeader}>
-                <span className={classes.title}>ねねさんクリッカー</span>
-                {windowWidth <= 540 && (
-                    <MenuIcon
-                        className={classes.hamburgerMenuIcon}
-                        onClick={handleClickMenuIcon}
-                    />
-                )}
-            </header>
+            <AppHeader
+                windowWidth={windowWidth}
+                onClickMenuIcon={handleClickMenuIcon}
+            />
             <div className={classes.body}>
                 <div
                     className={classes.cookieBody}
