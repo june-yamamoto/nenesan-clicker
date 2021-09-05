@@ -1,11 +1,13 @@
+import { DateTime } from 'luxon';
 import { AnyAction } from 'redux';
+import { ADD_BY_INTERVAL_MILLISCONDS } from '../hooks/useAddNenesanInterval';
 import { loadInLocalStorage, saveInLocalStorage } from '../infra/localStorage';
 import { BuildItem } from '../models/BuildItem';
 import { UpgradeItemBuilder } from '../models/UpgradeItem';
 import { calcNenesanPerClick } from '../utils/calcNenesanPerClick';
 import { calcNenesanPerSeconds } from '../utils/calcNenesanPerSeconds';
 import { convertBase64ToJson } from '../utils/convertSaveData';
-import { initialState } from './state';
+import { initialState, RootState } from './state';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const reducer = (state = initialState, action: AnyAction) => {
@@ -37,6 +39,7 @@ export const reducer = (state = initialState, action: AnyAction) => {
             state.maxNenesan = state.currentNenesan;
         }
         state.totalNenesan = state.totalNenesan + action.addCount;
+        state.totalPlayTime = state.totalPlayTime + ADD_BY_INTERVAL_MILLISCONDS;
         return state;
     }
     if (action.type === 'PURCHASE_UPGRADE_ITEM') {
@@ -79,85 +82,59 @@ export const reducer = (state = initialState, action: AnyAction) => {
     if (action.type === 'LOAD') {
         const loadedState = loadInLocalStorage();
         if (!loadedState) return state;
-        state = {
-            ...state,
-            allNenesanUntilNow: loadedState.allNenesanUntilNow,
-            currentNenesan: loadedState.currentNenesan,
-            clickedNenesanTimes: loadedState.clickedNenesanTimes || 0,
-            maxNenesan: loadedState.maxNenesan || 0,
-            totalNenesan: loadedState.totalNenesan || 0,
-            buildItems: state.buildItems.map((item) => {
-                const specifiedItem = loadedState.buildItems.find(
-                    (loadedItem: { id: string; itemHas: number }) =>
-                        item.id === loadedItem.id,
-                );
-                const specifiedItemHas =
-                    (specifiedItem?.itemHas as number) || 0;
-                return new BuildItem({
-                    ...item,
-                    itemHas: specifiedItemHas,
-                });
-            }),
-            upgradeItems: state.upgradeItems.map((item) => {
-                const specifiedItem = loadedState.upgradeItems.find(
-                    (loadedItem: { id: string; purchased: number }) =>
-                        item.id === loadedItem.id,
-                );
-                const specifiedItemPurchased =
-                    (specifiedItem?.purchased as boolean) || false;
-                return UpgradeItemBuilder({
-                    ...item,
-                    purchased: specifiedItemPurchased,
-                });
-            }),
-        };
-        state.nenesanPerSeconds = calcNenesanPerSeconds(
-            state.buildItems,
-            state.upgradeItems,
-        );
-        state.addCountPerClick = calcNenesanPerClick(state.upgradeItems)
+
+        return updateStateAll(state, loadedState);
     }
     if (action.type === 'IMPORT') {
         const importedState = convertBase64ToJson(action.saveDataBase64) as any;
         if (!importedState) return state;
-        state = {
-            ...state,
-            addCountPerClick: importedState.addCountPerClick,
-            allNenesanUntilNow: importedState.allNenesanUntilNow,
-            currentNenesan: importedState.currentNenesan,
-            clickedNenesanTimes: importedState.clickedNenesanTimes || 0,
-            maxNenesan: importedState.maxNenesan || 0,
-            totalNenesan: importedState.totalNenesan || 0,
-            buildItems: state.buildItems.map((item) => {
-                const specifiedItem = importedState.buildItems.find(
-                    (loadedItem: { id: string; itemHas: number }) =>
-                        item.id === loadedItem.id,
-                );
-                const specifiedItemHas =
-                    (specifiedItem?.itemHas as number) || 0;
-                return new BuildItem({
-                    ...item,
-                    itemHas: specifiedItemHas,
-                });
-            }),
-            upgradeItems: state.upgradeItems.map((item) => {
-                const specifiedItem = importedState.upgradeItems.find(
-                    (loadedItem: { id: string; purchased: number }) =>
-                        item.id === loadedItem.id,
-                );
-                const specifiedItemPurchased =
-                    (specifiedItem?.purchased as boolean) || false;
-                return UpgradeItemBuilder({
-                    ...item,
-                    purchased: specifiedItemPurchased,
-                });
-            }),
-        };
-        state.nenesanPerSeconds = calcNenesanPerSeconds(
-            state.buildItems,
-            state.upgradeItems,
-        );
-        state.addCountPerClick = calcNenesanPerClick(state.upgradeItems)
+
+        return updateStateAll(state, importedState);
     }
     return state;
 };
+
+function updateStateAll(currentState: RootState, nextState: any) {
+    currentState = {
+        ...currentState,
+        addCountPerClick: nextState.addCountPerClick,
+        allNenesanUntilNow: nextState.allNenesanUntilNow,
+        currentNenesan: nextState.currentNenesan,
+        clickedNenesanTimes: nextState.clickedNenesanTimes || 0,
+        maxNenesan: nextState.maxNenesan || 0,
+        totalNenesan: nextState.totalNenesan || 0,
+        totalPlayTime: nextState.totalPlayTime || 0,
+        buildItems: currentState.buildItems.map((item) => {
+            const specifiedItem = nextState.buildItems.find(
+                (loadedItem: { id: string; itemHas: number }) =>
+                    item.id === loadedItem.id,
+            );
+            const specifiedItemHas = (specifiedItem?.itemHas as number) || 0;
+            return new BuildItem({
+                ...item,
+                itemHas: specifiedItemHas,
+            });
+        }),
+        upgradeItems: currentState.upgradeItems.map((item) => {
+            const specifiedItem = nextState.upgradeItems.find(
+                (loadedItem: { id: string; purchased: number }) =>
+                    item.id === loadedItem.id,
+            );
+            const specifiedItemPurchased =
+                (specifiedItem?.purchased as boolean) || false;
+            return UpgradeItemBuilder({
+                ...item,
+                purchased: specifiedItemPurchased,
+            });
+        }),
+    };
+    currentState.nenesanPerSeconds = calcNenesanPerSeconds(
+        currentState.buildItems,
+        currentState.upgradeItems,
+    );
+    currentState.addCountPerClick = calcNenesanPerClick(
+        currentState.upgradeItems,
+    );
+    currentState.lastSaved = DateTime.now();
+    return currentState;
+}

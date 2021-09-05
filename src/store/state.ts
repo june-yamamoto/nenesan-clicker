@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { BuildItem, DefaultBuildItems } from '../models/BuildItem';
 import { DefaultUpgradeItems, UpgradeItemBuilder, UpgradeItemClasses } from '../models/UpgradeItem';
 
@@ -14,9 +15,18 @@ export interface StatisticsRootState {
     clickedNenesanTimes: number;
     maxNenesan: number;
     totalNenesan: number;
+    totalPlayTime: number;
 }
 
-export const initialState: ClickerRootState & StatisticsRootState = {
+export interface UserConfigState {
+    id?: string;
+    name?: string;
+    lastSaved?: DateTime;
+}
+
+export type RootState = ClickerRootState & StatisticsRootState & UserConfigState;
+
+export const initialState: ClickerRootState & StatisticsRootState & UserConfigState = {
     currentNenesan: 0,
     nenesanPerSeconds: 0,
     allNenesanUntilNow: 0,
@@ -30,4 +40,5 @@ export const initialState: ClickerRootState & StatisticsRootState = {
     clickedNenesanTimes: 0,
     maxNenesan: 0,
     totalNenesan: 0,
+    totalPlayTime: 0,
 };
