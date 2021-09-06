@@ -145,6 +145,36 @@ const upgradeClickItems: UpgradeItemType[] = [
         magnification: 4,
         unlockClickTimes: 150000,
     },
+    {
+        id: 'koharu',
+        name: '佐藤こはる',
+        flavor: '「塩対応の佐藤さんが俺にだけ甘い」の登場キャラであり、オーディオブック版の朗読にてねねさんが朗読を行っている。クリック時のねねさんの増加量を4倍にする',
+        link: 'https://www.audible.co.jp/pd/%E5%A1%A9%E5%AF%BE%E5%BF%9C%E3%81%AE%E4%BD%90%E8%97%A4%E3%81%95%E3%82%93%E3%81%8C%E4%BF%BA%E3%81%AB%E3%81%A0%E3%81%91%E7%94%98%E3%81%84-%E3%82%AA%E3%83%BC%E3%83%87%E3%82%A3%E3%82%AA%E3%83%96%E3%83%83%E3%82%AF/B08R35NJWY?qid=1630939774&sr=1-1&ref=f=a_search_c3_lProduct_1_1&pf_rd_p=051ed80d-7075-4d26-8156-6887bfda8699&pf_rd_r=ACMH4H87N6MZ3FT2R7DV',
+        price: 1000000000,
+        unlockCondition: 'ClickTimes',
+        magnification: 4,
+        unlockClickTimes: 200000,
+    },
+    {
+        id: 'misaki',
+        name: '神宮寺美咲',
+        flavor: '「恋は世界征服のあとで」の登場キャラであり、ねねさんが演じている。2022年1月からアニメ放送開始予定。正義の味方、氷結戦隊ジェラート５の一人、命の戦士、イエロージェラート。クリック時のねねさんの増加量を4倍にする',
+        link: 'https://koiseka-anime.com/',
+        price: 10000000000,
+        unlockCondition: 'ClickTimes',
+        magnification: 4,
+        unlockClickTimes: 250000,
+    },
+    {
+        id: 'douki',
+        name: '同期ちゃん',
+        flavor: '「がんばれ同期ちゃん」の登場キャラであり、ねねさんが演じている。2021年9月20日からAbemaTVにて放送開始。クリック時のねねさんの増加量を4倍にする',
+        link: 'https://doukichan-anime.com/',
+        price: 50000000000,
+        unlockCondition: 'ClickTimes',
+        magnification: 4,
+        unlockClickTimes: 300000,
+    },
 ];
 
 const upgradeBuildItems: UpgradeItemType[] = [
