@@ -315,6 +315,17 @@ const upgradeBuildItems: UpgradeItemType[] = [
         specificItemId: 'koko',
         unlockBuildTimes: 25,
     },
+    {
+        id: 'jk',
+        name: "音泉女子高生",
+        flavor: '林鼓子さんと白河みずなさんによるバラエティ番組。2019年6月からインターネットラジオステーション音泉のYouTubeチャンネルにて配信中。尚、放送開始時点でパーソナリティの2人は女子高生だったが2021年3月に林鼓子さんが高校を卒業したことで晴れて二人共女子高生ではなくなった。第73回、第74回に稗田寧々さんがゲスト出演しており、「スマホ写真ポーカー」「映画感想当てクイズ」を行った。はやまるが生産するねねさんを4倍にする。',
+        link: 'https://www.youtube.com/watch?v=HWLRGp77xfM&list=PLOH-hjjr1nOrd3XK5hqnFsS9L0e4dR4OY&index=31',
+        price: 50000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 4,
+        specificItemId: 'koko',
+        unlockBuildTimes: 50,
+    },
 ];
 
 export const DefaultUpgradeItems = upgradeBuildItems.concat(upgradeClickItems);

@@ -74,4 +74,10 @@ export const DefaultBuildItems: BuildItemType[] = [{
     flavor: '林鼓子。81プロデュース所属。稗田寧々さんの後輩。',
     basePrice: 800000,
     baseNenesanPerSeconds: 1000,
+}, {
+    id: 'asaka',
+    name: '亜咲花',
+    flavor: '亜咲花。アミュレート所属。女性シンガー、コスプレイヤー。',
+    basePrice: 240000000,
+    baseNenesanPerSeconds: 12000,
 }]
