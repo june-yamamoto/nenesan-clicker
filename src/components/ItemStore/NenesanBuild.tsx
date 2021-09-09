@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClickerRootState } from '../../store/state';
+import { calcNenesanPerSecondsBy } from '../../utils/calcNenesanPerSecondsBy';
 import { BuildItem } from './BuildItem';
 
 const useStyles = createUseStyles({
@@ -36,6 +37,9 @@ export const NenesanBuild = React.memo(() => {
     const buildItemLists = useSelector(
         (state: ClickerRootState) => state.buildItems,
     );
+    const upgradeItemLists = useSelector(
+        (state: ClickerRootState) => state.upgradeItems,
+    );
     const handleClickBuildItem = useCallback(
         (index: number) => {
             dispatch({ type: 'BUILD_ITEM', index });
@@ -58,6 +62,10 @@ export const NenesanBuild = React.memo(() => {
                             flavor={item.flavor}
                             price={item.currentPrice}
                             itemHas={item.itemHas}
+                            nenesanPerSeconds={calcNenesanPerSecondsBy(
+                                item,
+                                upgradeItemLists,
+                            )}
                             itemCanBuy={currentCount >= item.currentPrice}
                             onClickBuildItem={() => handleClickBuildItem(index)}
                         />

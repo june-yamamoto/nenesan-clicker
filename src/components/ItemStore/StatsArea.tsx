@@ -35,6 +35,8 @@ export const StatsArea = () => {
         (state: StatisticsRootState) => state.totalPlayTime,
     );
 
+    const maxClickCountPerSeconds = useSelector((state: StatisticsRootState) => state.maxClickCountPerSeconds);
+
     const playTimeString = playTimeToString(totalPlayTime);
 
     const stats = useMemo(() => {
@@ -47,9 +49,11 @@ export const StatsArea = () => {
                 {`累計 ${totalNenesan.toFixed(0)} ねねさん`}
                 <br />
                 {`累計プレイ時間 ${playTimeString}`}
+                <br />
+                {`秒間最大クリック数 ${maxClickCountPerSeconds}`}
             </div>
         );
-    }, [clickedNenesanTimes, maxNenesan, playTimeString, totalNenesan]);
+    }, [clickedNenesanTimes, maxClickCountPerSeconds, maxNenesan, playTimeString, totalNenesan]);
 
     return (
         <StatsTooltip open={open} title={stats} placement={'left-end'}>

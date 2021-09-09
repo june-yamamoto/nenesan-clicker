@@ -7,6 +7,7 @@ export interface ClickerRootState {
     nenesanPerSeconds: number;
     allNenesanUntilNow: number;
     addCountPerClick: number;
+    clickCountInSeconds: number;
     buildItems: BuildItem[];
     upgradeItems: UpgradeItemClasses[];
 }
@@ -16,6 +17,8 @@ export interface StatisticsRootState {
     maxNenesan: number;
     totalNenesan: number;
     totalPlayTime: number;
+    maxClickCountPerSeconds: number;
+    totalClickDialogue: number;
 }
 
 export interface UserConfigState {
@@ -31,6 +34,7 @@ export const initialState: ClickerRootState & StatisticsRootState & UserConfigSt
     nenesanPerSeconds: 0,
     allNenesanUntilNow: 0,
     addCountPerClick: 1,
+    clickCountInSeconds: 0,
     buildItems: DefaultBuildItems.map(
         (defaultBuildItem) => new BuildItem(defaultBuildItem),
     ),
@@ -41,4 +45,6 @@ export const initialState: ClickerRootState & StatisticsRootState & UserConfigSt
     maxNenesan: 0,
     totalNenesan: 0,
     totalPlayTime: 0,
+    maxClickCountPerSeconds: 0,
+    totalClickDialogue: 0,
 };

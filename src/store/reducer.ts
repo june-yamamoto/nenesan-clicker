@@ -14,6 +14,7 @@ export const reducer = (state = initialState, action: AnyAction) => {
     if (action.type === 'CLICK_ONCE') {
         state.currentNenesan = state.currentNenesan + state.addCountPerClick;
         state.clickedNenesanTimes = state.clickedNenesanTimes + 1;
+        state.clickCountInSeconds = state.clickCountInSeconds + 1;
         if (state.currentNenesan > state.maxNenesan) {
             state.maxNenesan = state.currentNenesan;
         }
@@ -91,6 +92,13 @@ export const reducer = (state = initialState, action: AnyAction) => {
 
         return updateStateAll(state, importedState);
     }
+    if (action.type === 'SECOND_INTERVAL') {
+        if (state.maxClickCountPerSeconds < state.clickCountInSeconds) {
+            state.maxClickCountPerSeconds = state.clickCountInSeconds;
+        }
+        state.clickCountInSeconds = 0;
+        return state;
+    }
     return state;
 };
 
@@ -104,6 +112,8 @@ function updateStateAll(currentState: RootState, nextState: any) {
         maxNenesan: nextState.maxNenesan || 0,
         totalNenesan: nextState.totalNenesan || 0,
         totalPlayTime: nextState.totalPlayTime || 0,
+        maxClickCountPerSeconds: nextState.maxClickCountPerSeconds || 0,
+        totalClickDialogue: nextState.totalClickDialogue || 0,
         buildItems: currentState.buildItems.map((item) => {
             const specifiedItem = nextState.buildItems.find(
                 (loadedItem: { id: string; itemHas: number }) =>
