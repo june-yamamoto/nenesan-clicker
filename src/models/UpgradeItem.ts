@@ -326,6 +326,28 @@ const upgradeBuildItems: UpgradeItemType[] = [
         specificItemId: 'koko',
         unlockBuildTimes: 50,
     },
+    {
+        id: 'AnimetickNight',
+        name: "亜咲花 Animetick Night",
+        flavor: '亜咲花さんによるラジオ番組。CBCラジオにて毎週土曜日27:30から放送中。2021年2月6日の放送に稗田寧々さんが村上まなつさんと一緒にゲスト出演している。亜咲花が生産するねねさんを2倍にする。',
+        link: 'https://hicbc.com/radio/aninai/',
+        price: 200000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 2,
+        specificItemId: 'asaka',
+        unlockBuildTimes: 10,
+    },
+    {
+        id: 'yaruyaruki3',
+        name: "稗田・宮原の自由奔放やりたい放題03",
+        flavor: 'wktkライブにて配信中の稗田寧々さんと宮原颯希さんによるバラエティ番組。この番組の第3回には「亜細亜に咲く花」こと亜咲花さんがゲスト出演している。稗田寧々さんと宮原颯希さんのことはネッシーとさっちゃんと呼ぶことにした。”稗田寧々さん”とホラー映画の話で盛り上がった。亜咲花が生産するねねさんを2倍にする。',
+        link: 'https://www.nicovideo.jp/watch/so38475366',
+        price: 1000000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 2,
+        specificItemId: 'asaka',
+        unlockBuildTimes: 25,
+    },
 ];
 
 export const DefaultUpgradeItems = upgradeBuildItems.concat(upgradeClickItems);
