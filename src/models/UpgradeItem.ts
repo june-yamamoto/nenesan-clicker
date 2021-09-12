@@ -296,7 +296,7 @@ const upgradeBuildItems: UpgradeItemType[] = [
     },
     {
         id: 'rungirlsrun',
-        name: "Run Girls, Run!",
+        name: 'Run Girls, Run!',
         flavor: '林鼓子さん、森嶋優花さん、厚木那奈美さんの3名により構成される声優ユニット。はやまるが生産するねねさんを2倍にする。',
         link: 'https://rungirlsrun.jp/',
         price: 100000000,
@@ -307,7 +307,7 @@ const upgradeBuildItems: UpgradeItemType[] = [
     },
     {
         id: 'namagaki',
-        name: "生牡蠣",
+        name: '生牡蠣',
         flavor: '稗田寧々さんは月1で食べたいと発言するほど生牡蠣が好きである。事務所の後輩である林鼓子さんを誘って生牡蠣を食べに行ったというエピソードは有名。はやまるが生産するねねさんを2倍にする。',
         price: 2000000000,
         unlockCondition: 'SpecificItemBuildTimes',
@@ -317,7 +317,7 @@ const upgradeBuildItems: UpgradeItemType[] = [
     },
     {
         id: 'jk',
-        name: "音泉女子高生",
+        name: '音泉女子高生',
         flavor: '林鼓子さんと白河みずなさんによるバラエティ番組。2019年6月からインターネットラジオステーション音泉のYouTubeチャンネルにて配信中。尚、放送開始時点でパーソナリティの2人は女子高生だったが2021年3月に林鼓子さんが高校を卒業したことで晴れて二人共女子高生ではなくなった。第73回、第74回に稗田寧々さんがゲスト出演しており、「スマホ写真ポーカー」「映画感想当てクイズ」を行った。はやまるが生産するねねさんを4倍にする。',
         link: 'https://www.youtube.com/watch?v=HWLRGp77xfM&list=PLOH-hjjr1nOrd3XK5hqnFsS9L0e4dR4OY&index=31',
         price: 50000000000,
@@ -328,7 +328,7 @@ const upgradeBuildItems: UpgradeItemType[] = [
     },
     {
         id: 'AnimetickNight',
-        name: "亜咲花 Animetick Night",
+        name: '亜咲花 Animetick Night',
         flavor: '亜咲花さんによるラジオ番組。CBCラジオにて毎週土曜日27:30から放送中。2021年2月6日の放送に稗田寧々さんが村上まなつさんと一緒にゲスト出演している。亜咲花が生産するねねさんを2倍にする。',
         link: 'https://hicbc.com/radio/aninai/',
         price: 200000000000,
@@ -339,7 +339,7 @@ const upgradeBuildItems: UpgradeItemType[] = [
     },
     {
         id: 'yaruyaruki3',
-        name: "稗田・宮原の自由奔放やりたい放題03",
+        name: '稗田・宮原の自由奔放やりたい放題03',
         flavor: 'wktkライブにて配信中の稗田寧々さんと宮原颯希さんによるバラエティ番組。この番組の第3回には「亜細亜に咲く花」こと亜咲花さんがゲスト出演している。稗田寧々さんと宮原颯希さんのことはネッシーとさっちゃんと呼ぶことにした。”稗田寧々さん”とホラー映画の話で盛り上がった。亜咲花が生産するねねさんを2倍にする。',
         link: 'https://www.nicovideo.jp/watch/so38475366',
         price: 1000000000000,
@@ -348,6 +348,51 @@ const upgradeBuildItems: UpgradeItemType[] = [
         specificItemId: 'asaka',
         unlockBuildTimes: 25,
     },
+    {
+        id: 'shinydays',
+        name: 'SHINY DAYS',
+        flavor: 'TVアニメ「ゆるキャン△」のオープニングテーマ。アニソンアーティスト亜咲花の4thシングル。良い曲。亜咲花が生産するねねさんを4倍にする。',
+        link: '',
+        price: 5000000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 4,
+        specificItemId: 'asaka',
+        unlockBuildTimes: 50,
+    },
+    {
+        id: 'startDash',
+        name: 'スタートダッシュ',
+        flavor: 'スピラ・スピカの楽曲。TVアニメ「ガンダムビルドダイバーズ」のエンディングテーマ。「ガンダムビルドダイバーズ」に出演しているねねさんと幹葉はここで出会い、交流を持つようになった。幹葉が生産するねねさんを2倍にする。',
+        link: '',
+        price: 20000000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 2,
+        specificItemId: 'mikiha',
+        unlockBuildTimes: 10,
+    },
+    {
+        id: 'sayonaranamida',
+        name: 'サヨナラナミダ',
+        flavor: 'スピラ・スピカの楽曲。TVアニメ「戦翼のシグルドリーヴァ」のエンディングテーマ。「ガンダムビルドダイバーズ」に引き続き2回目の共演を果たす。2021年4月18日に行われた「戦翼のシグルドリーヴァ」オンラインイベントでは、出演者一覧にいなかったものの本人の強い希望でボーカルの幹葉が出演(歌唱なし)を果たした。幹葉が生産するねねさんを2倍にする。',
+        link: '',
+        price: 100000000000000,
+        unlockCondition: 'SpecificItemBuildTimes',
+        magnification: 2,
+        specificItemId: 'mikiha',
+        unlockBuildTimes: 25,
+    }
 ];
+
+const upgradeItemTemplate = {
+    id: '',
+    name: '',
+    flavor: 'が生産するねねさんを2倍にする。',
+    link: '',
+    price: 0,
+    unlockCondition: 'SpecificItemBuildTimes',
+    magnification: 2,
+    specificItemId: '',
+    unlockBuildTimes: 10,
+};
 
 export const DefaultUpgradeItems = upgradeBuildItems.concat(upgradeClickItems);

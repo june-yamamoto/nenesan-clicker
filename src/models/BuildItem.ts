@@ -80,4 +80,10 @@ export const DefaultBuildItems: BuildItemType[] = [{
     flavor: '亜咲花。アミュレート所属。女性シンガー、コスプレイヤー。名前の由来は「亜細亜に咲く花」。',
     basePrice: 240000000,
     baseNenesanPerSeconds: 12000,
+}, {
+    id: 'mikiha',
+    name: '幹葉',
+    flavor: 'スリーピース・ロックバンド「スピラ・スピカ」のボーカル、ギター担当。徳島県出身。口を開いたら止まらないマシンガントークが特徴。',
+    basePrice: 50000000000,
+    baseNenesanPerSeconds: 500000,
 }]
