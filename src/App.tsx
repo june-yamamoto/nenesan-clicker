@@ -1,34 +1,23 @@
 import { useCallback, useState } from 'react';
 import Div100vh from 'react-div-100vh';
 import { createUseStyles } from 'react-jss';
-import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { CookieBody } from './components/Cookie/CookieBody';
 import { ItemStore } from './components/ItemStore/ItemStore';
 import { useAddNenesanInterval } from './hooks/useAddNenesanInterval';
-import useInterval from './hooks/useInterval';
 import useMount from './hooks/useMount';
-import { ClickerRootState } from './store/state';
+import { ClickerRootState, RootState } from './store/state';
 import { useEffect } from 'react';
-import { Drawer } from '@material-ui/core';
+import { Drawer, Snackbar } from '@material-ui/core';
+import { AppHeader } from './components/Header/AppHeader';
 import { useSecondInterval } from './hooks/useSecondInterval';
+import { useSaveToServer } from './hooks/useSaveToServer';
+import useInterval from './hooks/useInterval';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = createUseStyles({
     root: {
         userSelect: 'none',
-    },
-    title: {
-        color: '#ffd93c',
-    },
-    appHeader: {
-        backgroundColor: '#282c34',
-        height: '60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'left',
-        paddingLeft: '16px',
-        fontSize: 'calc(10px + 2vmin)',
-        color: 'white',
     },
     body: {
         display: 'flex',
@@ -42,10 +31,6 @@ const useStyles = createUseStyles({
         minWidth: '300px',
         borderWidth: '3px',
         borderColor: '#888888',
-    },
-    hamburgerMenuIcon: {
-        position: 'absolute',
-        right: 16,
     },
 });
 
@@ -69,13 +54,29 @@ export const App = () => {
         return () => window.removeEventListener('resize', resizeListener);
     });
 
+    // const [isAppInit, setIsAppInit] = useState(false);
+
     useMount(() => {
         dispatch({ type: 'LOAD' });
     });
 
+    const [savedSnackbarOpen, setSavedSnackbarOpen] = useState(false);
+
     useInterval(() => {
         dispatch({ type: 'SAVE' });
-    }, 10000);
+        setSavedSnackbarOpen(true);
+    }, 60000);
+
+    // useEffect(() => {
+    //     if (currentState.name === '') {
+
+    //     } else {
+    //         setIsAppInit(true);
+    //     }
+    // }, []);
+
+    const currentState = useSelector((state: RootState) => state);
+    useSaveToServer(true, currentState, dispatch);
 
     const handleClickMenuIcon = useCallback(() => {
         setOpen(!open);
@@ -89,15 +90,10 @@ export const App = () => {
 
     return (
         <Div100vh className={classes.root}>
-            <header className={classes.appHeader}>
-                <span className={classes.title}>ねねさんクリッカー</span>
-                {windowWidth <= 540 && (
-                    <MenuIcon
-                        className={classes.hamburgerMenuIcon}
-                        onClick={handleClickMenuIcon}
-                    />
-                )}
-            </header>
+            <AppHeader
+                windowWidth={windowWidth}
+                onClickMenuIcon={handleClickMenuIcon}
+            />
             <div className={classes.body}>
                 <div
                     className={classes.cookieBody}
@@ -107,6 +103,18 @@ export const App = () => {
                     }}
                 >
                     <CookieBody />
+                    <Snackbar
+                        open={savedSnackbarOpen}
+                        autoHideDuration={3000}
+                        onClose={() => setSavedSnackbarOpen(false)}
+                        anchorOrigin={
+                            windowWidth <= 540
+                                ? { vertical: 'bottom', horizontal: 'center' }
+                                : { vertical: 'bottom', horizontal: 'left' }
+                        }
+                    >
+                        <Alert>セーブしました</Alert>
+                    </Snackbar>
                 </div>
                 {windowWidth <= 540 ? (
                     <Drawer
