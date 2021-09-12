@@ -17,7 +17,5 @@ const firebaseConfigDev = {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfigDev);
 
-console.log('init firebase');
-
 export default firebase;
 export const db = getFirestore();

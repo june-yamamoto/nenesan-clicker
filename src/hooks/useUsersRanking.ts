@@ -1,19 +1,26 @@
-import { collection, onSnapshot } from 'firebase/firestore';
-import { useEffect } from 'react';
+import { collection, DocumentData, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 
 /**
  * DB上のユーザー情報を取得するhooks
  */
-export const useUsersRanking = () => {
+export const useUsersRanking = (open: boolean) => {
+    const [userData, setUserData] = useState<any>([]);
     useEffect(() => {
-        const col = collection(db, 'users');
+        if (!open) return;
 
-        const unsubscribe = onSnapshot(col, {
-            next: (sn) => {
-                console.log(sn.docs.map((docSn) => docSn.data()));
-            },
-        });
-        return unsubscribe;
-    });
+        getUserSaveData();
+    }, [open]);
+
+    const getUserSaveData = async () => {
+        const saveDataArray: DocumentData[] = [];
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        querySnapshot.forEach((doc) => {
+            saveDataArray.push(doc.data());
+        }, []);
+        setUserData(saveDataArray)
+    }
+
+    return userData;
 };
