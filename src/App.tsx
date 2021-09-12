@@ -11,6 +11,7 @@ import useMount from './hooks/useMount';
 import { ClickerRootState } from './store/state';
 import { useEffect } from 'react';
 import { Drawer } from '@material-ui/core';
+import { useSecondInterval } from './hooks/useSecondInterval';
 
 const useStyles = createUseStyles({
     root: {
@@ -81,6 +82,8 @@ export const App = () => {
     }, [open]);
 
     useAddNenesanInterval(nenesanPerSeconds, dispatch);
+
+    useSecondInterval(dispatch);
 
     const classes = useStyles();
 

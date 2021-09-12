@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Card, CardContent } from '@material-ui/core';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
@@ -11,6 +11,7 @@ type BuildItemProps = {
     price: number;
     itemHas: number;
     itemCanBuy: boolean;
+    nenesanPerSeconds: number;
     onClickBuildItem: () => void;
 };
 
@@ -60,6 +61,7 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
         price,
         itemHas,
         itemCanBuy,
+        nenesanPerSeconds,
         onClickBuildItem,
     } = props;
 
@@ -79,8 +81,15 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
         setOpen(false);
     }, []);
 
+    const tooltipText = useMemo(() => {
+        if (!itemHas) {
+            return flavor;
+        }
+        return `${flavor} \n 秒間 ${convertDisplayUnits(nenesanPerSeconds, 1)} ねねさんを生産する。`;
+    }, [flavor, itemHas, nenesanPerSeconds]);
+
     return (
-        <ItemTooltip open={open} title={flavor} placement={'left-start'}>
+        <ItemTooltip open={open} title={tooltipText} placement={'left-start'}>
             <Card
                 className={classes.root}
                 onMouseOver={handleMouseOver}
@@ -91,7 +100,9 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
                     onClick={onClickBuildItem}
                 >
                     <div className={classes.itemName}>{name}</div>
-                    <div className={classes.itemPrice}>{convertDisplayUnits(price)} ねねさん</div>
+                    <div className={classes.itemPrice}>
+                        {convertDisplayUnits(price)} ねねさん
+                    </div>
                     <div className={classes.itemCurrentHas}>{itemHas}</div>
                 </CardContent>
             </Card>
