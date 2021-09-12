@@ -52,7 +52,7 @@ export const AppHeader = (props: AppHeaderProps) => {
                     onClick={onClickMenuIcon}
                 />
             )}
-            {rankingOpen && <RankingDialog />}
+            {/* <RankingDialog open={rankingOpen} onClose={handleCloseRanking} /> */}
         </header>
     );
 };
