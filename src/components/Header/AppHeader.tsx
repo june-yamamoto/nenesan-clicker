@@ -45,7 +45,7 @@ export const AppHeader = (props: AppHeaderProps) => {
     return (
         <header className={classes.appHeader}>
             <span className={classes.title}>ねねさんクリッカー</span>
-            <Stars onClick={handleOpenRankingButton} />
+            {/* <Stars onClick={handleOpenRankingButton} /> */}
             {windowWidth <= 540 && (
                 <MenuIcon
                     className={classes.hamburgerMenuIcon}
