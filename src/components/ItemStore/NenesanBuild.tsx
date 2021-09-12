@@ -1,8 +1,9 @@
+import { privateDecrypt } from 'crypto';
 import React from 'react';
 import { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClickerRootState } from '../../store/state';
+import { ClickerRootState, StatisticsRootState } from '../../store/state';
 import { calcNenesanPerSecondsBy } from '../../utils/calcNenesanPerSecondsBy';
 import { BuildItem } from './BuildItem';
 
@@ -40,6 +41,9 @@ export const NenesanBuild = React.memo(() => {
     const upgradeItemLists = useSelector(
         (state: ClickerRootState) => state.upgradeItems,
     );
+    const maxNenesan = useSelector(
+        (state: StatisticsRootState) => state.maxNenesan,
+    );
     const handleClickBuildItem = useCallback(
         (index: number) => {
             dispatch({ type: 'BUILD_ITEM', index });
@@ -55,6 +59,9 @@ export const NenesanBuild = React.memo(() => {
                 <span className={classes.title}>ねねさんのオトモダチ</span>
             </div>
             {buildItemLists.map((item, index) => {
+                if (item.basePrice > maxNenesan * 100) {
+                    return;
+                }
                 return (
                     <div className={classes.buildItem} key={index}>
                         <BuildItem
@@ -67,6 +74,7 @@ export const NenesanBuild = React.memo(() => {
                                 upgradeItemLists,
                             )}
                             itemCanBuy={currentCount >= item.currentPrice}
+                            itemHidden={item.basePrice > maxNenesan * 10}
                             onClickBuildItem={() => handleClickBuildItem(index)}
                         />
                     </div>

@@ -12,6 +12,7 @@ type BuildItemProps = {
     itemHas: number;
     itemCanBuy: boolean;
     nenesanPerSeconds: number;
+    itemHidden: boolean;
     onClickBuildItem: () => void;
 };
 
@@ -62,6 +63,7 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
         itemHas,
         itemCanBuy,
         nenesanPerSeconds,
+        itemHidden,
         onClickBuildItem,
     } = props;
 
@@ -82,11 +84,13 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
     }, []);
 
     const tooltipText = useMemo(() => {
+        if (itemHidden) return '???';
+
         if (!itemHas) {
             return flavor;
         }
         return `${flavor} \n 秒間 ${convertDisplayUnits(nenesanPerSeconds, 1)} ねねさんを生産する。`;
-    }, [flavor, itemHas, nenesanPerSeconds]);
+    }, [flavor, itemHas, itemHidden, nenesanPerSeconds]);
 
     return (
         <ItemTooltip open={open} title={tooltipText} placement={'left-start'}>
@@ -99,11 +103,11 @@ export const BuildItem = React.memo((props: BuildItemProps) => {
                     className={itemContentClass}
                     onClick={onClickBuildItem}
                 >
-                    <div className={classes.itemName}>{name}</div>
+                    <div className={classes.itemName}>{itemHidden ? '???' : name}</div>
                     <div className={classes.itemPrice}>
                         {convertDisplayUnits(price)} ねねさん
                     </div>
-                    <div className={classes.itemCurrentHas}>{itemHas}</div>
+                    <div className={classes.itemCurrentHas}>{itemHidden ? '' : itemHas}</div>
                 </CardContent>
             </Card>
         </ItemTooltip>
