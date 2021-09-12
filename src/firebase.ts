@@ -14,8 +14,18 @@ const firebaseConfigDev = {
   appId: "1:905810650612:web:a2bc66c931fc66d22e05a1"
 };
 
+const firebaseConfigProd = {
+  apiKey: "AIzaSyAScn8_08eKA0HYa2xOF4VLXrVthZ4h7go",
+  authDomain: "nenesan-clicker.firebaseapp.com",
+  projectId: "nenesan-clicker",
+  storageBucket: "nenesan-clicker.appspot.com",
+  messagingSenderId: "1002128382783",
+  appId: "1:1002128382783:web:182a6d25069ea1fab8d18a",
+  measurementId: "G-91CB05B24F"
+};
+
 // Initialize Firebase
-const firebase = initializeApp(firebaseConfigDev);
+const firebase = initializeApp(firebaseConfigProd);
 
 export default firebase;
 export const db = getFirestore();
