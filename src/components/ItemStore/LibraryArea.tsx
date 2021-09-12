@@ -14,7 +14,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useCallback, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useSelector } from 'react-redux';
+import { ItemUpgradeItem } from '../../models/UpgradeItem';
 import { ClickerRootState } from '../../store/state';
+import { UpgradeItemSecondaryText } from './UpgradeItemSecondaryText';
 
 const useStyles = createUseStyles({
     appBar: {
@@ -41,6 +43,10 @@ export const LibraryArea = () => {
         state.upgradeItems.filter((item) => item.purchased),
     );
 
+    const buildItems = useSelector(
+        (state: ClickerRootState) => state.buildItems,
+    );
+
     return (
         <>
             <Button onClick={handleOpen}>
@@ -61,22 +67,23 @@ export const LibraryArea = () => {
                 </AppBar>
                 <List>
                     {purchasedUpgradeItem.map((item) => {
+                        const buildItemName =
+                            item instanceof ItemUpgradeItem
+                                ? buildItems.filter(
+                                    (buildItem) =>
+                                        buildItem.id === item.specificItemId,
+                                )[0].name
+                                : undefined;
                         return (
                             <>
                                 <ListItem key={item.id}>
                                     <ListItemText
                                         primary={item.name}
                                         secondary={
-                                            <>
-                                                <div>{item.flavor}</div>
-                                                <div>
-                                                    {item.link && (
-                                                        <a href={item.link} target="_blank" rel="noreferrer">
-                                                            リンク
-                                                        </a>
-                                                    )}
-                                                </div>
-                                            </>
+                                            <UpgradeItemSecondaryText
+                                                upgradeItem={item}
+                                                buildItemName={buildItemName}
+                                            />
                                         }
                                     />
                                 </ListItem>

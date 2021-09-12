@@ -13,6 +13,7 @@ import { Drawer } from '@material-ui/core';
 import { AppHeader } from './components/Header/AppHeader';
 import firebase, { db } from './firebase';
 import { collection } from 'firebase/firestore';
+import { useSecondInterval } from './hooks/useSecondInterval';
 
 const useStyles = createUseStyles({
     root: {
@@ -66,6 +67,8 @@ export const App = () => {
     }, [open]);
 
     useAddNenesanInterval(nenesanPerSeconds, dispatch);
+
+    useSecondInterval(dispatch);
 
     const classes = useStyles();
 

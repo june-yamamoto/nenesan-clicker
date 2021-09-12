@@ -3,6 +3,7 @@ import { AssessmentOutlined } from '@material-ui/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StatisticsRootState } from '../../store/state';
+import { playTimeToString } from '../../utils/playTimeToString';
 
 const StatsTooltip = withStyles((theme) => ({
     tooltip: {
@@ -30,6 +31,14 @@ export const StatsArea = () => {
         (state: StatisticsRootState) => state.totalNenesan,
     );
 
+    const totalPlayTime = useSelector(
+        (state: StatisticsRootState) => state.totalPlayTime,
+    );
+
+    const maxClickCountPerSeconds = useSelector((state: StatisticsRootState) => state.maxClickCountPerSeconds);
+
+    const playTimeString = playTimeToString(totalPlayTime);
+
     const stats = useMemo(() => {
         return (
             <div>
@@ -38,9 +47,13 @@ export const StatsArea = () => {
                 {`最大 ${maxNenesan.toFixed(0)} ねねさん`}
                 <br />
                 {`累計 ${totalNenesan.toFixed(0)} ねねさん`}
+                <br />
+                {`累計プレイ時間 ${playTimeString}`}
+                <br />
+                {`秒間最大クリック数 ${maxClickCountPerSeconds}`}
             </div>
         );
-    }, [clickedNenesanTimes, maxNenesan, totalNenesan]);
+    }, [clickedNenesanTimes, maxClickCountPerSeconds, maxNenesan, playTimeString, totalNenesan]);
 
     return (
         <StatsTooltip open={open} title={stats} placement={'left-end'}>
