@@ -19,7 +19,8 @@ import {
     convertBase64ToJson,
     convertJsonToBase64,
 } from '../../utils/convertSaveData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserConfigState } from '../../store/state';
 
 const useStyles = createUseStyles({
     root: {},
@@ -30,7 +31,7 @@ const useStyles = createUseStyles({
     iconButton: {
         marginRight: 16,
     },
-    importExportArea: {
+    container: {
         marginTop: 8,
         marginBottom: 8,
     },
@@ -55,6 +56,11 @@ export const ConfigArea = () => {
 
     const [isImportBase64Normaly, setIsImportBase64Normaly] = useState(true);
 
+    const currentName = useSelector((state: UserConfigState) => state.name);
+
+    const [inputName, setInputName] = useState<string>(currentName || '');
+
+
     const handleOpen = useCallback(() => {
         setOpen((prev: boolean) => !prev);
     }, []);
@@ -78,6 +84,14 @@ export const ConfigArea = () => {
         setIsImportBase64Normaly(!convertBase64ToJson(event.target.value));
     }, []);
 
+    const handleChangeNameTextField = useCallback((event) => {
+        setInputName(event.target.value);
+    }, []);
+
+    const handleSetName = useCallback(() => {
+        dispatch({ type: 'SET_NAME', inputName: inputName});
+    }, [dispatch, inputName]);
+
     return (
         <>
             <Button onClick={handleOpen}>
@@ -96,7 +110,30 @@ export const ConfigArea = () => {
                         設定
                     </Toolbar>
                 </AppBar>
-                <Container className={classes.importExportArea}>
+                <Container className={classes.container}>
+                    <div>名前を設定する ※名前はランキング欄に表示されます ランキングは5分おきに更新されます</div>
+                    <div className={classes.margin}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSetName}
+                        >
+                            決定
+                        </Button>
+                        <TextField
+                            fullWidth
+                            id="outlined-read-only-input"
+                            placeholder={currentName || "名前を入力してください"}
+                            InputProps={{
+                                readOnly: false,
+                            }}
+                            onChange={handleChangeNameTextField}
+                            variant="outlined"
+                            className={classes.textField}
+                        />
+                    </div>
+                </Container>
+                <Container className={classes.container}>
                     <div>セーブデータのエクスポート</div>
                     <div className={classes.margin}>
                         <Button
@@ -109,7 +146,7 @@ export const ConfigArea = () => {
                         <TextField
                             fullWidth
                             id="outlined-read-only-input"
-                            defaultValue="ここにセーブデータが表示されます"
+                            placeholder="ここにセーブデータが表示されます"
                             InputProps={{
                                 readOnly: true,
                             }}
@@ -133,7 +170,7 @@ export const ConfigArea = () => {
                         <TextField
                             fullWidth
                             id="outlined-read-only-input"
-                            defaultValue="ここにセーブデータを入力してください"
+                            placeholder="ここにセーブデータを入力してください"
                             InputProps={{
                                 readOnly: false,
                             }}

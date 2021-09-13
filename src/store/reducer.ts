@@ -88,6 +88,12 @@ export const reducer = (state = initialState, action: AnyAction) => {
         return state;
     }
 
+    if (action.type === 'SET_NAME') {
+        state.name = action.inputName;
+        saveInLocalStorage(makeSaveDataState(state));
+        return state;
+    }
+
     if (action.type === 'SECOND_INTERVAL') {
         if (state.maxClickCountPerSeconds < state.clickCountInSeconds) {
             state.maxClickCountPerSeconds = state.clickCountInSeconds;
@@ -103,7 +109,6 @@ function updateStateAll(currentState: RootState, nextState: any) {
         ...currentState,
         id: nextState.id || '',
         name: nextState.name || '',
-        allNenesanUntilNow: nextState.allNenesanUntilNow,
         currentNenesan: nextState.currentNenesan,
         clickedNenesanTimes: nextState.clickedNenesanTimes || 0,
         maxNenesan: nextState.maxNenesan || 0,
