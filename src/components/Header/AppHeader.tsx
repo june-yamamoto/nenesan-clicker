@@ -3,6 +3,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Stars } from '@material-ui/icons';
 import { useCallback, useState } from 'react';
 import { RankingDialog } from './RankingDialog';
+import { UserConfigState } from '../../store/state';
+import { useSelector } from 'react-redux';
 
 type AppHeaderProps = {
     windowWidth: number;
@@ -27,12 +29,17 @@ const useStyles = createUseStyles({
         position: 'absolute',
         right: 16,
     },
+    star: {
+        marginLeft: 8,
+    },
 });
 
 export const AppHeader = (props: AppHeaderProps) => {
     const { windowWidth, onClickMenuIcon } = props;
     const classes = useStyles();
     const [rankingOpen, setRankingOpen] = useState(false);
+
+    const userName = useSelector((state: UserConfigState) => state.name);
 
     const handleOpenRankingButton = useCallback(() => {
         setRankingOpen(true);
@@ -45,14 +52,19 @@ export const AppHeader = (props: AppHeaderProps) => {
     return (
         <header className={classes.appHeader}>
             <span className={classes.title}>ねねさんクリッカー</span>
-            {/* <Stars onClick={handleOpenRankingButton} /> */}
+            {userName && <Stars onClick={handleOpenRankingButton} className={classes.star}/>}
             {windowWidth <= 540 && (
                 <MenuIcon
                     className={classes.hamburgerMenuIcon}
                     onClick={onClickMenuIcon}
                 />
             )}
-            {/* <RankingDialog open={rankingOpen} onClose={handleCloseRanking} /> */}
+            {userName && (
+                <RankingDialog
+                    open={rankingOpen}
+                    onClose={handleCloseRanking}
+                />
+            )}
         </header>
     );
 };

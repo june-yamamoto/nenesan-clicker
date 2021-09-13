@@ -5,7 +5,6 @@ import { DefaultUpgradeItems, UpgradeItemBuilder, UpgradeItemClasses } from '../
 export interface ClickerRootState {
     currentNenesan: number;
     nenesanPerSeconds: number;
-    allNenesanUntilNow: number;
     addCountPerClick: number;
     clickCountInSeconds: number;
     buildItems: BuildItem[];
@@ -32,7 +31,6 @@ export type RootState = ClickerRootState & StatisticsRootState & UserConfigState
 export const initialState: ClickerRootState & StatisticsRootState & UserConfigState = {
     currentNenesan: 0,
     nenesanPerSeconds: 0,
-    allNenesanUntilNow: 0,
     addCountPerClick: 1,
     clickCountInSeconds: 0,
     buildItems: DefaultBuildItems.map(

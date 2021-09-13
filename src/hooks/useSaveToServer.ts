@@ -17,5 +17,5 @@ export const useSaveToServer = (
         saveDataState.id
             ? dispatch(saveToServerAction(saveDataState))
             : dispatch(saveToServerWithApplyIdAction(saveDataState));
-    }, 60000);
+    }, 300000);
 };

@@ -1,6 +1,6 @@
 import { RootState } from '../state';
 
-export function makeSaveDataState(currentState: RootState) {
+export function makeSaveDataState(currentState: RootState): SaveDataType {
     const buildItems = currentState.buildItems.map((item) => {
         return {
             id: item.id,
@@ -16,7 +16,6 @@ export function makeSaveDataState(currentState: RootState) {
     const saveData = {
         id: currentState.id || '',
         name: currentState.name || '',
-        allNenesanUntilNow: currentState.allNenesanUntilNow,
         currentNenesan: currentState.currentNenesan,
         clickedNenesanTimes: currentState.clickedNenesanTimes,
         maxNenesan: currentState.maxNenesan,
@@ -29,3 +28,17 @@ export function makeSaveDataState(currentState: RootState) {
     };
     return saveData;
 }
+
+export type SaveDataType = {
+    id: string;
+    name: string;
+    currentNenesan: number;
+    clickedNenesanTimes: number;
+    maxNenesan: number;
+    totalNenesan: number;
+    totalPlayTime: number;
+    maxClickCountPerSeconds: number;
+    totalClickDialogue: number;
+    buildItems: { id: string; itemHas: number }[];
+    upgradeItems: { id: string; purchased: boolean }[];
+};
