@@ -54,8 +54,6 @@ export const App = () => {
         return () => window.removeEventListener('resize', resizeListener);
     });
 
-    // const [isAppInit, setIsAppInit] = useState(false);
-
     useMount(() => {
         dispatch({ type: 'LOAD' });
     });
@@ -66,14 +64,6 @@ export const App = () => {
         dispatch({ type: 'SAVE' });
         setSavedSnackbarOpen(true);
     }, 60000);
-
-    // useEffect(() => {
-    //     if (currentState.name === '') {
-
-    //     } else {
-    //         setIsAppInit(true);
-    //     }
-    // }, []);
 
     const currentState = useSelector((state: RootState) => state);
     useSaveToServer(true, currentState, dispatch);
