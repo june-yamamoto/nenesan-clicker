@@ -81,7 +81,7 @@ export const RankingDialog = (props: RankingDialogProps) => {
     const record = useMemo(() => {
         return userRecords
             .sort((a, b) => {
-                if (a.maxNenesan < b.maxNenesan) {
+                if (a.totalNenesan < b.totalNenesan) {
                     return 1;
                 }
                 return -1;
