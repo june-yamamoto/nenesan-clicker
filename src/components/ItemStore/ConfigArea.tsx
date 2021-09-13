@@ -49,6 +49,7 @@ export const ConfigArea = () => {
     const [open, setOpen] = useState(false);
 
     const [importAlertOpen, setImportAlertOpen] = useState(false);
+    const [updateNameAlertOpen, setUpdateNameAlertOpen] = useState(false);
 
     const [exportBase64, setExportBase64] = useState('');
 
@@ -90,6 +91,7 @@ export const ConfigArea = () => {
 
     const handleSetName = useCallback(() => {
         dispatch({ type: 'SET_NAME', inputName: inputName});
+        setUpdateNameAlertOpen(true);
     }, [dispatch, inputName]);
 
     return (
@@ -188,6 +190,13 @@ export const ConfigArea = () => {
                     onClose={() => setImportAlertOpen(false)}
                 >
                     <Alert>セーブデータをインポートしました</Alert>
+                </Snackbar>
+                <Snackbar
+                    open={updateNameAlertOpen}
+                    autoHideDuration={6000}
+                    onClose={() => setUpdateNameAlertOpen(false)}
+                >
+                    <Alert>ユーザー名を更新しました</Alert>
                 </Snackbar>
             </Dialog>
         </>
