@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
-import nenesan from '../../static/image/nenesan_dummy.png';
+import nenesan from '../../static/image/nenesan_icon.png';
 import { CookieBodyCanvas } from './CookieBodyCanvas';
 import useMount from '../../hooks/useMount';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import { ClickerRootState } from '../../store/state';
 import { useEffect } from 'react';
 import { convertDisplayUnits } from '../../utils/convertDisplayUnits';
 import { CookieBodyBackgroundCanvas } from './CookieBodyBackgroundCanvas';
+import { DialogueSupport } from './DialogueSupport';
 
 const useStyles = createUseStyles({
     root: {
@@ -58,6 +59,13 @@ const useStyles = createUseStyles({
         position: 'absolute',
         bottom: 5,
         right: 5,
+    },
+    dialogueSupport: {
+        display: 'flex',
+        position: 'absolute',
+        width: '100%',
+        height: 'calc(100% - 60px)',
+        pointerEvents: 'none',
     },
 });
 
@@ -135,16 +143,20 @@ export const CookieBody = () => {
             <CookieBodyBackgroundCanvas
                 canvasWidth={canvasWidthRef.current}
                 canvasHeight={canvasHeightRef.current}
-                />
+            />
             <div className={classes.label}>
-                <span>{`${convertDisplayUnits(currentCount, 0)} ねねさん`}</span>
-                <span>{`+${convertDisplayUnits(nenesanPerSeconds, 1)} ねねさん/s`}</span>
-                <span>{`+${convertDisplayUnits(nenesanPerClick, 0)} ねねさん/クリック`}</span>
-                {/* <span>{`${currentCount.toFixed(0)} ねねさん`}</span>
-                <span>{`+${nenesanPerSeconds.toFixed(1)} ねねさん/s`}</span>
-                <span>{`+${nenesanPerClick.toFixed(
+                <span>{`${convertDisplayUnits(
+                    currentCount,
                     0,
-                )} ねねさん/クリック`}</span> */}
+                )} ねねさん`}</span>
+                <span>{`+${convertDisplayUnits(
+                    nenesanPerSeconds,
+                    1,
+                )} ねねさん/s`}</span>
+                <span>{`+${convertDisplayUnits(
+                    nenesanPerClick,
+                    0,
+                )} ねねさん/クリック`}</span>
             </div>
             <div className={classes.neneCookieContainer}>
                 <img
@@ -161,6 +173,12 @@ export const CookieBody = () => {
                 mouseStatus={mouseStatus}
             />
             <div className={classes.appVersion}>{appVersion}</div>
+            <div className={classes.dialogueSupport}>
+                <DialogueSupport
+                    width={canvasWidthRef.current}
+                    height={canvasHeightRef.current}
+                />
+            </div>
         </div>
     );
 };
