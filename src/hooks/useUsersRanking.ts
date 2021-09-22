@@ -29,6 +29,7 @@ export const useUsersRanking = (open: boolean) => {
                 totalPlayTime: data.totalPlayTime,
                 maxClickCountPerSeconds: data.maxClickCountPerSeconds,
                 totalClickDialogue: data.totalClickDialogue,
+                totalClickDialogueArray: data.totalClickDialogueArray,
                 buildItems: data.buildItems.map((buildItem: any) => {
                     return { id: buildItem.id, itemHas: buildItem.itemHas };
                 }),
