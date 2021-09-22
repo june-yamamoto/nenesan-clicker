@@ -35,6 +35,8 @@ export const StatsArea = () => {
         (state: StatisticsRootState) => state.totalPlayTime,
     );
 
+    const totalDialogueSupport = useSelector((state: StatisticsRootState) => state.totalClickDialogue);
+
     const maxClickCountPerSeconds = useSelector((state: StatisticsRootState) => state.maxClickCountPerSeconds);
 
     const playTimeString = playTimeToString(totalPlayTime);
@@ -48,12 +50,14 @@ export const StatsArea = () => {
                 <br />
                 {`累計 ${totalNenesan.toFixed(0)} ねねさん`}
                 <br />
+                {`DIALOGUE＋サポート発動回数 ${totalDialogueSupport}回`}
+                <br />
                 {`累計プレイ時間 ${playTimeString}`}
                 <br />
                 {`秒間最大クリック数 ${maxClickCountPerSeconds}`}
             </div>
         );
-    }, [clickedNenesanTimes, maxClickCountPerSeconds, maxNenesan, playTimeString, totalNenesan]);
+    }, [clickedNenesanTimes, maxClickCountPerSeconds, maxNenesan, playTimeString, totalDialogueSupport, totalNenesan]);
 
     return (
         <StatsTooltip open={open} title={stats} placement={'left-end'}>
