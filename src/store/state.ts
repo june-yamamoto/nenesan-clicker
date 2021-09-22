@@ -5,8 +5,11 @@ import { DefaultUpgradeItems, UpgradeItemBuilder, UpgradeItemClasses } from '../
 export interface ClickerRootState {
     currentNenesan: number;
     nenesanPerSeconds: number;
+    nenesanPerSecondsMagnification: number;
     addCountPerClick: number;
+    addCountPerClickMagnification: number;
     clickCountInSeconds: number;
+    currentBackgroundColor: string;
     buildItems: BuildItem[];
     upgradeItems: UpgradeItemClasses[];
 }
@@ -18,6 +21,7 @@ export interface StatisticsRootState {
     totalPlayTime: number;
     maxClickCountPerSeconds: number;
     totalClickDialogue: number;
+    totalClickDialogueArray: number[];
 }
 
 export interface UserConfigState {
@@ -31,8 +35,11 @@ export type RootState = ClickerRootState & StatisticsRootState & UserConfigState
 export const initialState: ClickerRootState & StatisticsRootState & UserConfigState = {
     currentNenesan: 0,
     nenesanPerSeconds: 0,
+    nenesanPerSecondsMagnification: 1,
     addCountPerClick: 1,
+    addCountPerClickMagnification: 1,
     clickCountInSeconds: 0,
+    currentBackgroundColor: '',
     buildItems: DefaultBuildItems.map(
         (defaultBuildItem) => new BuildItem(defaultBuildItem),
     ),
@@ -45,4 +52,5 @@ export const initialState: ClickerRootState & StatisticsRootState & UserConfigSt
     totalPlayTime: 0,
     maxClickCountPerSeconds: 0,
     totalClickDialogue: 0,
+    totalClickDialogueArray: [0, 0, 0, 0, 0, 0, 0, 0],
 };

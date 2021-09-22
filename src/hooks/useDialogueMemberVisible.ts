@@ -1,22 +1,25 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { DIALOGUE_ARRAY } from '../static/resource/dialogue_array';
 import useMount from './useMount';
 
-const oneMinutes = 2000;
+const oneMinutes = 60000;
 
-const startMinutes = 1;
+const startMinutes = 5;
 
-const firstSuccessProbability = 0.3;
+const firstSuccessProbability = 0.4;
 
-const dialogueMemberArrayProbability = [13, 13, 9, 13, 13, 13, 13, 13];
+const dialogueMemberArrayProbability = DIALOGUE_ARRAY.map(
+    (element) => element.supportProbability,
+);
 
 /**
  * startMinutes + n の数字を返す
- * n = 0から始め、確率30%をスタートとして失敗する度に成功確率を5%増やしていく
+ * n = 0から始め、確率40%をスタートとして失敗する度に成功確率を5%増やしていく
  */
 const calculateVisualizeTime = (startMinutes: number) => {
     for (let i = 0; i < 11; i++) {
         if (Math.random() < firstSuccessProbability + 0.05 * i) {
-            console.log(`${startMinutes + i}分`);
             return startMinutes + i;
         }
     }
@@ -25,22 +28,23 @@ const calculateVisualizeTime = (startMinutes: number) => {
 
 const lotMember = () => {
     const rand = Math.floor(Math.random() * 100);
-    console.log(rand);
     let rate = 0;
     let index = 0;
+    let flag = false;
     dialogueMemberArrayProbability.forEach((probability, _index) => {
-        if (index !== 0) return;
+        if (flag) return;
         rate += probability;
         if (rand <= rate) {
             index = _index;
+            flag = true;
             return;
         }
     });
-    console.log('lot', index);
     return index;
 };
 
 export const useDialogueMemberVisible = (width: number, height: number) => {
+    const dispatch = useDispatch();
     const visibleRef = useRef(false);
 
     const positionX = useRef<number>(0);
@@ -93,6 +97,31 @@ export const useDialogueMemberVisible = (width: number, height: number) => {
         if (changeInvisibleIdRef.current) {
             clearTimeout(changeInvisibleIdRef.current);
         }
+
+        if ([0, 1, 2, 3].includes(selectedIndexRef.current)) {
+            dispatch({
+                type: 'START_DIALOGUE_SUPPORT_A',
+                index: selectedIndexRef.current,
+            });
+            setTimeout(() => {
+                dispatch({ type: 'FINISH_DIALOGUE_SUPPORT_A' });
+            }, 88000);
+            if (selectedIndexRef.current === 1) {
+                dispatch({ type: 'START_NENESAN_TIME' });
+                setTimeout(() => {
+                    dispatch({ type: 'FINISH_NENESAN_TIME' });
+                }, 7000);
+            }
+        } else {
+            dispatch({
+                type: 'START_DIALOGUE_SUPPORT_B',
+                index: selectedIndexRef.current,
+            });
+            setTimeout(() => {
+                dispatch({ type: 'FINISH_DIALOGUE_SUPPORT_B' });
+            });
+        }
+
         setTimeout(reset, 1000);
         setTimeout(
             changeVisible,

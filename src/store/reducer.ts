@@ -4,6 +4,7 @@ import { ADD_BY_INTERVAL_MILLISCONDS } from '../hooks/useAddNenesanInterval';
 import { loadInLocalStorage, saveInLocalStorage } from '../infra/localStorage';
 import { BuildItem } from '../models/BuildItem';
 import { UpgradeItemBuilder } from '../models/UpgradeItem';
+import { DIALOGUE_ARRAY } from '../static/resource/dialogue_array';
 import { calcNenesanPerClick } from '../utils/calcNenesanPerClick';
 import { calcNenesanPerSeconds } from '../utils/calcNenesanPerSeconds';
 import { convertBase64ToJson } from '../utils/convertSaveData';
@@ -33,6 +34,7 @@ export const reducer = (state = initialState, action: AnyAction) => {
         state.nenesanPerSeconds = calcNenesanPerSeconds(
             state.buildItems,
             state.upgradeItems,
+            state.nenesanPerSecondsMagnification,
         );
         return state;
     }
@@ -60,9 +62,71 @@ export const reducer = (state = initialState, action: AnyAction) => {
         state.nenesanPerSeconds = calcNenesanPerSeconds(
             state.buildItems,
             state.upgradeItems,
+            state.nenesanPerSecondsMagnification,
         );
-        state.addCountPerClick = calcNenesanPerClick(state.upgradeItems);
+        state.addCountPerClick = calcNenesanPerClick(
+            state.upgradeItems,
+            state.addCountPerClickMagnification,
+        );
         return state;
+    }
+
+    if (action.type === 'START_DIALOGUE_SUPPORT_A') {
+        state.totalClickDialogue += 1;
+        state.totalClickDialogueArray[action.index] += 1;
+        state.nenesanPerSecondsMagnification = 8;
+        state.nenesanPerSeconds = calcNenesanPerSeconds(
+            state.buildItems,
+            state.upgradeItems,
+            state.nenesanPerSecondsMagnification,
+        );
+        state.currentBackgroundColor = DIALOGUE_ARRAY[action.index].color;
+    }
+
+    if (action.type === 'START_DIALOGUE_SUPPORT_B') {
+        state.totalClickDialogue += 1;
+        state.totalClickDialogueArray[action.index] += 1;
+        state.addCountPerClickMagnification = 8;
+        state.addCountPerClick = calcNenesanPerClick(
+            state.upgradeItems,
+            state.addCountPerClickMagnification,
+        );
+        state.currentBackgroundColor = DIALOGUE_ARRAY[action.index].color;
+    }
+
+    if (action.type === 'START_NENESAN_TIME') {
+        state.addCountPerClickMagnification = 777;
+        state.addCountPerClick = calcNenesanPerClick(
+            state.upgradeItems,
+            state.addCountPerClickMagnification,
+        );
+    }
+
+    if (action.type === 'FINISH_DIALOGUE_SUPPORT_A') {
+        state.nenesanPerSecondsMagnification = 1;
+        state.nenesanPerSeconds = calcNenesanPerSeconds(
+            state.buildItems,
+            state.upgradeItems,
+            state.nenesanPerSecondsMagnification,
+        );
+        state.currentBackgroundColor = '';
+    }
+
+    if (action.type === 'FINISH_DIALOGUE_SUPPORT_B') {
+        state.addCountPerClickMagnification = 1;
+        state.addCountPerClick = calcNenesanPerClick(
+            state.upgradeItems,
+            state.addCountPerClickMagnification,
+        );
+        state.currentBackgroundColor = '';
+    }
+
+    if (action.type === 'FINISH_NENESAN_TIME') {
+        state.addCountPerClickMagnification = 1;
+        state.addCountPerClick = calcNenesanPerClick(
+            state.upgradeItems,
+            state.addCountPerClickMagnification,
+        );
     }
 
     if (action.type === 'SAVE') {
@@ -116,6 +180,9 @@ function updateStateAll(currentState: RootState, nextState: any) {
         totalPlayTime: nextState.totalPlayTime || 0,
         maxClickCountPerSeconds: nextState.maxClickCountPerSeconds || 0,
         totalClickDialogue: nextState.totalClickDialogue || 0,
+        totalClickDialogueArray: nextState.totalClickDialogueArray || [
+            0, 0, 0, 0, 0, 0, 0, 0,
+        ],
         buildItems: currentState.buildItems.map((item) => {
             const specifiedItem = nextState.buildItems.find(
                 (loadedItem: { id: string; itemHas: number }) =>
@@ -143,9 +210,11 @@ function updateStateAll(currentState: RootState, nextState: any) {
     currentState.nenesanPerSeconds = calcNenesanPerSeconds(
         currentState.buildItems,
         currentState.upgradeItems,
+        currentState.nenesanPerSecondsMagnification,
     );
     currentState.addCountPerClick = calcNenesanPerClick(
         currentState.upgradeItems,
+        currentState.addCountPerClickMagnification,
     );
     currentState.lastSaved = DateTime.now();
     return currentState;

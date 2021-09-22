@@ -31,6 +31,30 @@ type VisualizePointArrayType = {
     datetime: DateTime;
 };
 
+const onomatopeArray = [
+    {value: 'ﾈﾈッ', probability: 2},
+    {value: 'ぴえん', probability: 4},
+    {value: 'ぷす', probability: 44},
+    {value: 'ぷに', probability: 50},
+]
+
+const randomOnomatope = () => {
+    const rand = Math.floor(Math.random() * 100);
+    let rate = 0;
+    let index = 0;
+    let flag = false;
+    onomatopeArray.forEach((element, _index) => {
+        if (flag) return;
+        rate += element.probability;
+        if (rand <= rate) {
+            index = _index;
+            flag = true;
+            return;
+        }
+    });
+    return onomatopeArray[index].value;
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
     const { canvasHeight, canvasWidth, mouseStatus, onMouseUp } = props;
@@ -70,7 +94,7 @@ export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
                         x: Math.ceil(Math.random() * canvasWidthRef.current),
                         y: Math.ceil(Math.random() * canvasHeightRef.current),
                     },
-                    onomatope: Math.random() > 0.5 ? 'ぷに' : 'ぷす',
+                    onomatope: randomOnomatope(),
                     addedValue: addCountPerClick,
                     datetime: DateTime.now(),
                 },

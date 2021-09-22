@@ -90,6 +90,10 @@ export const CookieBody = () => {
         (state: ClickerRootState) => state.addCountPerClick,
     );
 
+    const currentBackgroundColor = useSelector(
+        (state: ClickerRootState) => state.currentBackgroundColor,
+    );
+
     useMount(() => {
         if (!rootDivRef.current) return;
         canvasHeightRef.current = rootDivRef.current.clientHeight;
@@ -139,7 +143,11 @@ export const CookieBody = () => {
             : process.env.REACT_APP_VERSION_WIN;
 
     return (
-        <div className={classes.root} ref={rootDivRef}>
+        <div
+            className={classes.root}
+            ref={rootDivRef}
+            style={{ backgroundColor: currentBackgroundColor }}
+        >
             <CookieBodyBackgroundCanvas
                 canvasWidth={canvasWidthRef.current}
                 canvasHeight={canvasHeightRef.current}

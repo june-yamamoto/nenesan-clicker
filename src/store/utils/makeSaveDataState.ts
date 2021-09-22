@@ -23,6 +23,7 @@ export function makeSaveDataState(currentState: RootState): SaveDataType {
         totalPlayTime: currentState.totalPlayTime,
         maxClickCountPerSeconds: currentState.maxClickCountPerSeconds,
         totalClickDialogue: currentState.totalClickDialogue,
+        totalClickDialogueArray: currentState.totalClickDialogueArray,
         buildItems,
         upgradeItems,
     };
@@ -39,6 +40,7 @@ export type SaveDataType = {
     totalPlayTime: number;
     maxClickCountPerSeconds: number;
     totalClickDialogue: number;
+    totalClickDialogueArray: number[];
     buildItems: { id: string; itemHas: number }[];
     upgradeItems: { id: string; purchased: boolean }[];
 };

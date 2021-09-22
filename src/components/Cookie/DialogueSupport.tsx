@@ -2,30 +2,14 @@ import classnames from 'classnames';
 import { useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDialogueMemberVisible } from '../../hooks/useDialogueMemberVisible';
-import yurinya from '../../static/image/yurinya_icon.png';
-import nenesan from '../../static/image/nenesan_icon.png';
-import kyon from '../../static/image/kyon_icon.png';
-import yuna from '../../static/image/yuna_icon.png';
-import yakan from '../../static/image/yakan_icon.png';
-import sappi from '../../static/image/sappi_icon.png';
-import mayu from '../../static/image/mayu_icon.png';
-import manat from '../../static/image/manat_icon.png';
+import { DIALOGUE_ARRAY } from '../../static/resource/dialogue_array';
 
 type DialogueSupportProps = {
     width: number;
     height: number;
 };
 
-const dialogueMemberImages = [
-    yurinya,
-    nenesan,
-    kyon,
-    yuna,
-    yakan,
-    sappi,
-    mayu,
-    manat,
-];
+const dialogueMemberImages = DIALOGUE_ARRAY.map((element) => element.imgSrc);
 
 const useStyles = createUseStyles({
     dialogueMember: {

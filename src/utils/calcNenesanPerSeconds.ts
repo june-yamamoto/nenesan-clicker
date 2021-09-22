@@ -8,6 +8,7 @@ import {
 export const calcNenesanPerSeconds = (
     buildItems: BuildItem[],
     upgradeItems: UpgradeItemClasses[],
+    magnification: number,
 ): number => {
     let perSeconds = 0;
     buildItems.forEach((buildItem) => {
@@ -21,7 +22,7 @@ export const calcNenesanPerSeconds = (
             buildItem.itemHas *
             calcSpacificUpgradeItemsMagnifications(specificUpgradeItems);
     });
-    return perSeconds;
+    return perSeconds * magnification;
 };
 
 function calcSpacificUpgradeItemsMagnifications(
