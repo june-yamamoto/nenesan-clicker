@@ -1,6 +1,6 @@
 {
     "name": "nenesan-clicker",
-    "version": "0.3.2",
+    "version": "0.4.3",
     "private": true,
     "dependencies": {
         "@material-ui/core": "^4.12.3",
@@ -42,7 +42,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "deploy": "react-scripts build && firebase deploy"
     },
     "eslintConfig": {
         "extends": [
