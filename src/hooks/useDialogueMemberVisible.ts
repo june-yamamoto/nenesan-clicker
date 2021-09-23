@@ -119,7 +119,7 @@ export const useDialogueMemberVisible = (width: number, height: number) => {
             });
             setTimeout(() => {
                 dispatch({ type: 'FINISH_DIALOGUE_SUPPORT_B' });
-            });
+            }, 88000);
         }
 
         setTimeout(reset, 1000);
