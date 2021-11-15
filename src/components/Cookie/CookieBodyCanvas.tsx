@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useRef } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector } from 'react-redux';
+import { AnyIfEmpty, useSelector } from 'react-redux';
 import useMount from '../../hooks/useMount';
 import { ClickerRootState } from '../../store/state';
 
@@ -32,11 +32,11 @@ type VisualizePointArrayType = {
 };
 
 const onomatopeArray = [
-    {value: 'ﾈﾈッ', probability: 2},
-    {value: 'ぴえん', probability: 4},
-    {value: 'ぷす', probability: 44},
-    {value: 'ぷに', probability: 50},
-]
+    { value: 'ﾈﾈッ', probability: 2 },
+    { value: 'ぴえん', probability: 4 },
+    { value: 'ぷす', probability: 44 },
+    { value: 'ぷに', probability: 50 },
+];
 
 const randomOnomatope = () => {
     const rand = Math.floor(Math.random() * 100);
@@ -53,7 +53,7 @@ const randomOnomatope = () => {
         }
     });
     return onomatopeArray[index].value;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
@@ -80,6 +80,37 @@ export const CookieBodyCanvas = (props: CookieBodyCanvasProps) => {
     const addCountPerClick = useSelector(
         (state: ClickerRootState) => state.addCountPerClick,
     );
+
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const handleKeydownE = (event: any) => {
+            if (event.key === 'e' && mouseStatus === true) {
+                visualizePointArrayRef.current = [
+                    {
+                        point: {
+                            x: 0,
+                            y: 0,
+                        },
+                        puniPoint: {
+                            x: Math.ceil(
+                                Math.random() * canvasWidthRef.current,
+                            ),
+                            y: Math.ceil(
+                                Math.random() * canvasHeightRef.current,
+                            ),
+                        },
+                        onomatope: 'ね',
+                        addedValue: addCountPerClick,
+                        datetime: DateTime.now(),
+                    },
+                    ...visualizePointArrayRef.current,
+                ].slice(0, 15);
+                onMouseUp();
+            }
+        };
+        document.addEventListener('keypress', handleKeydownE);
+        return () => document.removeEventListener('keypress', handleKeydownE);
+    }, [addCountPerClick, mouseStatus, onMouseUp]);
 
     const handleMouseUp = useCallback(
         (e: any) => {

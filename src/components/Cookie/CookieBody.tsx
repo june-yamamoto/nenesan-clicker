@@ -113,6 +113,7 @@ export const CookieBody = () => {
     }, [dispatch]);
 
     const handleClickNenesan = useCallback(() => {
+        console.log('handleClicknenesan');
         clickOnce();
     }, [clickOnce]);
 
@@ -129,6 +130,20 @@ export const CookieBody = () => {
             handleClickNenesan();
         }
         setMouseStatus(false);
+    }, [handleClickNenesan, mouseStatus]);
+
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const keypressListener = (event: any) => {
+            if (event.key === 'n') {
+                setMouseStatus(true);
+                return;
+            }
+        };
+        document.addEventListener('keypress', keypressListener);
+        return () => {
+            document.removeEventListener('keypress', keypressListener);
+        };
     }, [handleClickNenesan, mouseStatus]);
 
     const classes = useStyles();
